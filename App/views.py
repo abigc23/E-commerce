@@ -11,3 +11,4 @@ def Home(request):
         'forms':buscar
     }
     return render (request,'index.html',data)
+
