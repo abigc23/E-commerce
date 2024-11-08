@@ -5,4 +5,5 @@ from .forms import *
 
 urlpatterns = [
     #-->URL, FUNCION, NOMBRE PARA HTML
+    path('',Home,name='inicio'),
 ]
