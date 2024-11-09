@@ -26,8 +26,10 @@
               <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                   <li class="nav-item">
+                    {% if user.is_superuser %}
                     <a class="nav-link" href="{% url 'add' %}">Añadir</a>
                   </li>
+                  {% endif %}
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       Productos
