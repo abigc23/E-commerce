@@ -18,6 +18,13 @@ class Genre(models.Model):
     def __str__(self):
         return self.name
 
+class Publisher(models.Model):
+    publisher_id = models.AutoField(primary_key=True, default=1)
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
 class Book(models.Model):
     book_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)
@@ -26,8 +33,12 @@ class Book(models.Model):
     isbn = models.CharField(max_length=13, unique=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.IntegerField()
-    cover_image = models.CharField(max_length=255)
+    cover_image = models.ImageField()
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    language = models.CharField(max_length=100, default='Unknown')
+    dimensions = models.CharField(max_length=50, default='Unknown')
+    publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE, default=1) 
+    page_count = models.IntegerField(null=True)
 
     def __str__(self):
         return self.title

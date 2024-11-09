@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 {% load static %}
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebSite</title>
+    <title>Librería</title>
     <!-- Hoja de Estilos -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <!-- Hoja de Estilos de Bootstrap -->
@@ -14,140 +14,128 @@
 </head>
 
 <body>
-    <header class="encabezado">
-       <a href="{% url 'inicio' %}"><img src="{% static 'img/index/logo.png' %}" alt="Logo" title="Logo" class="logotipo"></a>
-        <nav class="menu_selectivo">
-            <a href="{% url 'agregar' %}">Agregar</a>
-            <!-- Nombre de URL-- visualizar -->
-            <a href="{% url 'visualizar' %}">Visualizar</a>
-            <a href="">Nosotros</a>
-            <a href="" id="contacto_btn">Contacto</a>
-
-            {% csrf_token %}
-            {% if user.is_authenticated %}
-            <a href="{% url 'logout' %}" id="contacto_btl">Logout</a>
-            {% else %}
-            <a href="{% url 'login' %}" id="contacto_btl">Login</a>
-            {% endif %}
-
-        </nav>
+    <header class="header">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'home' %}">
+                    <img src="{% static 'img/index/logo.png' %}" alt="Logo" class="logotipo">
+                </a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'add' %}">Añadir</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Productos
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="">Ficción</a></li>
+                      <li><a class="dropdown-item" href="">No Ficción</a></li>
+                      <li><a class="dropdown-item" href="">Infantiles</a></li>
+                      <li><a class="dropdown-item" href="">Ciencia</a></li>
+                      <li><a class="dropdown-item" href="">Historia</a></li>
+                    </ul>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Nosotros</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#contact_btn">Contacto</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>          
     </header>
-    <section class="intermedio">
-        {% block intermedio %}
-        <img src="{% static 'img/Intermedio/intermedio_gif.gif' %}" alt="Carrousel" class="principal_intermedio">
+    <section class="banner">
+        {% block banner %}
+        <img src="{% static 'img/banner/banner_image.jpg' %}" alt="Banner" class="banner_image">
         {% endblock %}
     </section>
-    <main class="contenedor_general">
-        {% block cuerpo %}
-        <div class="contenedor_index">
-            <img src="{% static 'img/index/Hogwarts.png' %}" alt="">
-            <article class="artitulo">
-                <h2>Colegio Hogwarts de Magia y Hechicería</h2>
-                <p>Es un internado mágico ubicado en Escocia. El castillo se ubica en unas montañas cercanas a un
-                    lago. La localización exacta no ha sido descubierta ya que está escondida por los más poderosos
-                    encantamientos posibles. Sin embargo, de acuerdo con Hermione Granger, no está muy lejos de
-                    Dufftown. Los encantamientos que protegen al castillo son clasificados como encantamientos
-                    anti-aparición y encantos repelentes de Muggles (como el repello muggletum), que lo hacen que ellos
-                    vean unas ruinas antiguas con un letrero que dice "Peligro, prohibido el paso" en lugar del
-                    castillo. Estos encantamientos pueden ser levantados por el Director. La mayoría de los dispositivos
-                    electrónicos no funcionan en los terrenos de Hogwarts. En un momento dado, Hogwarts llegó a
-                    tener 1000 estudiantes.</p>
-                <h4>Perspectiva general</h4>
-                <p>Hogwarts es una de las tres escuelas más importantes de Europa, que entrena a personas con
-                    habilidades mágicas para que se conviertan en magos y brujas cualificados. Su estatus no es muy
-                    discutido en las novelas de Harry Potter, pero es conocida como un internado de secundaria que
-                    aborda a niños de 11 a 17 años.</p>
+    <main class="main_content">
+        {% block content %}
+        <div class="intro_section">
+            <img src="{% static 'img/index/store.png' %}" alt="Store">
+            <article class="store_info">
+                <h2>Bienvenido a Nuestra Librería</h2>
+                <p>Descubre una gran variedad de libros en diferentes géneros y de varios autores. Ofrecemos una
+                    selección única para satisfacer el gusto de cada lector. ¡Explora nuestra colección y encuentra tu
+                    próximo libro favorito!</p>
+                <h4>Nuestra Misión</h4>
+                <p>Nuestra misión es llevar la alegría de la lectura a todos. Desde los más vendidos hasta los libros 
+                    raros, tenemos algo para cada amante de la lectura.</p>
+            </article>
         </div>
 
-        <div class="tarjetas_index">
-            <div class="tarjeta_volteo">
-                <div class="tarjeta_volteo-interno">
-                    <div class="tarjeta_volteo-front">
-                        <img src="{% static 'img/index/Gryffindor.jpg' %}" alt="">
+        <div class="book_cards">
+            <div class="book_card">
+                <div class="book_card-inner">
+                    <div class="book_card-front">
+                        <img src="{% static 'img/books/genre1.jpg' %}" alt="Género 1">
                     </div>
-                    <div class="tarjeta_volteo-back">
-                        Gryffindor es una de las cuatro casas del Colegio Hogwarts de Magia y Hechicería, fundada por
-                        Godric Gryffindor. Su animal emblemático es el león y sus colores son el rojo escarlata y el
-                        dorado. Minerva McGonagall es la más reciente jefa de la casa.
-                    </div>
-                </div>
-            </div>
-            <div class="tarjeta_volteo">
-                <div class="tarjeta_volteo-interno">
-                    <div class="tarjeta_volteo-front">
-                        <img src="{% static 'img/index/Hufflepuff.jpg' %}" alt="">
-                    </div>
-                    <div class="tarjeta_volteo-back">
-                        Hufflepuffes una de las cuatro casas del Colegio Hogwarts de Magia y
-                        Hechicería. Su fundadora es la bruja medieval Helga Hufflepuff. La jefa de la casa es Pomona
-                        Sprout.El fraile gordo es el fantasma de la casa
+                    <div class="book_card-back">
+                        Descubre nuestra selección de novelas de misterio apasionantes. Perfectas para quienes disfrutan
+                        del suspenso y la intriga.
                     </div>
                 </div>
             </div>
-
-            <div class="tarjeta_volteo">
-                <div class="tarjeta_volteo-interno">
-                    <div class="tarjeta_volteo-front">
-                        <img src="{% static 'img/index/Ravenclaw.jpg' %}" alt="">
+            <div class="book_card">
+                <div class="book_card-inner">
+                    <div class="book_card-front">
+                        <img src="{% static 'img/books/genre2.jpg' %}" alt="Género 2">
                     </div>
-                    <div class="tarjeta_volteo-back">
-                        Ravenclawes una de las cuatro casas que componen el Colegio Hogwarts de Magia
-                        y Hechicería, fundada por Rowena Ravenclaw, quién tuvo una hija, cuyo fantasma es la Dama
-                        Gris la cual fue asesinada por el Barón Sanguinario.
+                    <div class="book_card-back">
+                        Sumérgete en nuestra colección de libros de ciencia ficción. Explora nuevos mundos y aventuras
+                        futuristas.
                     </div>
                 </div>
             </div>
-
-            <div class="tarjeta_volteo">
-                <div class="tarjeta_volteo-interno">
-                    <div class="tarjeta_volteo-front">
-                        <img src="{% static 'img/index/Slytherin.jpg' %}" alt="">
+            <div class="book_card">
+                <div class="book_card-inner">
+                    <div class="book_card-front">
+                        <img src="{% static 'img/books/genre3.jpg' %}" alt="Género 3">
                     </div>
-                    <div class="tarjeta_volteo-back">
-                        Slytherin es una de las cuatro casas del Colegio Hogwarts de Magia
-                        y Hechicería, fundada por Salazar Slytherin. Al establecer la casa, Salazar instruyó al Sombrero
-                        Seleccionador para que seleccionara a los estudiantes que tenían las características
-                        particulares que él valoraba más
+                    <div class="book_card-back">
+                        Disfruta de historias conmovedoras de nuestro género de romance. Ideal para aquellos que aman
+                        los finales felices.
                     </div>
                 </div>
             </div>
-
+            <div class="book_card">
+                <div class="book_card-inner">
+                    <div class="book_card-front">
+                        <img src="{% static 'img/books/genre4.jpg' %}" alt="Género 4">
+                    </div>
+                    <div class="book_card-back">
+                        Aprende con nuestra extensa colección de libros educativos, que abarcan una amplia gama de temas.
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="contenedor_visualizar">
-            <!-- 
-                i-- Variable para el conteo
-                forms -- Palabra enviada desde "Data" para Traer los Datos
-                for -- Ciclo por Conteo
-                Desde el Primer Elemento hasta el Ultimo elemento
-            -->
-            {% for i in forms %}
-            <div class="card" style="width: 300px; margin-top: 100px;">
-                <!-- Pasamos la Ruta de la Imagen Registrada -->
-                <img src="{{i.Imagen.url}}" class="card-img-top" alt="Imagen BD">
+        
+        <div class="products_section">
+            {% for book in books %}
+            <div class="card" style="width: 300px; margin-top: 20px;">
+                <img src="{{book.cover_image}}" class="card-img-top" alt="Portada">
                 <div class="card-body">
-                  <h4 class="card-title">Nombre: {{i.Nombre}}</h4>
-                  <h5 class="card-title">Casa: {{i.Casa}}</h5>
-                  <p class="card-text">Hechizo: {{i.Hechizo}}</p>
-                  {% if perms.App.change_personajes %}
-                  <a href="{% url 'modificar' i.Codigo %}" class="btn btn-warning">Editar</a>
-                  {% endif %}
-                  {% if perms.App.delete_personajes %}
-                  <a href="{% url 'eliminar' i.Codigo %}" class="btn btn-danger">Eliminar</a>
-                  {% endif %}
+                  <h4 class="card-title">Título: {{book.title}}</h4>
                 </div>
               </div>
-              {% endfor %}
+            {% endfor %}
         </div>
-
         {% endblock %}
     </main>
     <footer>
-        <img src="{% static 'img/index/ig.png' %}" alt="">
-        <img src="{% static 'img/index/facebook.png' %}" alt="">
-        <img src="{% static 'img/index/whatsapp.png' %}" alt="">
-        <img src="{% static 'img/index/gorjeo.png' %}" alt="">
+        <img src="{% static 'img/index/ig.png' %}" alt="Instagram">
+        <img src="{% static 'img/index/facebook.png' %}" alt="Facebook">
+        <img src="{% static 'img/index/whatsapp.png' %}" alt="WhatsApp">
+        <img src="{% static 'img/index/gorjeo.png' %}" alt="Twitter">
     </footer>
-    <!-- Hoja de Acciones de Bootstrap -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
