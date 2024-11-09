@@ -1,0 +1,22 @@
+{% extends 'index.html' %}
+
+    {% load static %}
+
+    {% block add %}
+        <img src="" alt="Img">
+    {% endblock %}
+
+    {% block body %}
+        <div class="add-container">
+            <img src="" alt="Add">
+
+            <form action="" method="post" enctype="multipart/form-data">
+                <h1>Añadir producto</h1>
+                    {{forms}}
+                    {% csrf_token %}
+                    <input type="submit" value="Añadir" class="btn btn-success">
+                    <a href=""><input type="submit" value="Ver productos" class="btn btn-secondary"></a>
+                    <p>{{message}}</p>
+            </form>
+        </div>
+    {% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+    {% block visualize %}
+        <img src="{% static 'img/index/products_banner.png' %}" alt="Productos">
+    {% endblock %}
+
+    {% block body %}
+        <div class="products-container">
+            <h1>Lista de Productos</h1>
+            <div class="products_section">
+                {% for book in books %}
+                    <div class="card" style="width: 300px; margin-top: 20px;">
+                        <img src="{{ book.cover_image }}" class="card-img-top" alt="Portada del libro">
+                        <div class="card-body">
+                            <h4 class="card-title">Título: {{ book.title }}</h4>
+                            <p class="card-text">Descripción: {{ book.description }}</p>
+                            <p class="card-text">Fecha de publicación: {{ book.publication_date }}</p>
+                            <p class="card-text">ISBN: {{ book.isbn }}</p>
+                            <p class="card-text">Precio: ${{ book.price }}</p>
+                            <p class="card-text">Stock: {{ book.stock }}</p>
+                            <p class="card-text">Autor: {{ book.author.name }}</p>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>No hay productos disponibles.</p>
+                {% endfor %}
+            </div>
+        </div>
+    {% endblock %}
