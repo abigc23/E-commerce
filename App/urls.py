@@ -6,6 +6,6 @@ from .forms import *
 urlpatterns = [
     #-->URL, FUNCION, NOMBRE PARA HTML
     path('', Home, name='home'),
-    path('visualize/', Visualize, name='visuaize'),
+    path('visualize/', Visualize, name='visualize'),
     path('add/', Add, name="add"),
 ]
