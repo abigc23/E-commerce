@@ -1,22 +1,31 @@
 {% extends 'index.html' %}
 
-    {% load static %}
+{% load static %}
 
-    {% block add %}
-        <img src="" alt="Img">
-    {% endblock %}
+{% block add %}
+    <img src="" alt="Img">
+{% endblock %}
 
-    {% block body %}
-        <div class="add-container">
-            <img src="" alt="Add">
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="add-container">
+                    <h1 class="text-center mb-4">Añadir producto</h1>
 
-            <form action="" method="post" enctype="multipart/form-data">
-                <h1>Añadir producto</h1>
-                    {{forms}}
-                    {% csrf_token %}
-                    <input type="submit" value="Añadir" class="btn btn-success">
-                    <a href=""><input type="submit" value="Ver productos" class="btn btn-secondary"></a>
-                    <p>{{message}}</p>
-            </form>
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {{ forms }}  <!-- Asegúrate de que el formulario se pase correctamente -->
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="submit" value="Añadir" class="btn btn-success w-100">
+                        </div>
+                        <div class="form-group mt-2">
+                            <a href="" class="btn btn-secondary w-100">Ver productos</a>
+                        </div>
+                        <p>{{ message }}</p>
+                    </form>
+                </div>
+            </div>
         </div>
-    {% endblock %}
+    </div>
+{% endblock %}

@@ -14,17 +14,9 @@ body {
 }
 
 /* Header */
-.header {
-    padding: 15px 20px;
-    background-color: #333;
-}
-
-.header .navbar-brand img {
-    height: 40px;
-}
 
 .navbar-nav .nav-link {
-    color: #fff;
+    color: #333;
     margin-left: 20px;
     font-weight: 500;
 }
@@ -33,16 +25,60 @@ body {
     color: #ddd;
 }
 
+.logotipo{
+    width: 100px;
+    height: auto;
+}
+
 /* Banner */
 .banner {
-    width: 100%;
-    max-height: 250px;
-    overflow: hidden;
+    width: 95%;
+    max-height: 350px;
+    padding: 20px;
+    background-color: #fff3e6; 
+    border-radius: 40px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+}
+
+.banner_content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    max-width: 90%;
 }
 
 .banner_image {
+    width: 35%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.banner_text {
+    display: flex;
+    flex-direction: column;
+    max-width: 60%;
+}
+
+.banner_title {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.banner_subtitle {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Separator */
+.separator {
     width: 100%;
-    object-fit: cover;
+    height: 1px;
+    background-color: #e6e6e6;
+    margin: 20px auto;
 }
 
 /* Main Content */
@@ -75,76 +111,51 @@ body {
     font-size: 16px;
     color: #555;
 }
-
-/* Book Cards */
-.book_cards {
+.genre-circles {
     display: flex;
-    flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
     margin-bottom: 30px;
 }
 
-.book_card {
-    width: 180px;
-    cursor: pointer;
-    overflow: hidden;
-    border-radius: 8px;
-    background-color: #eee;
+.genre-circle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+}
+
+.genre-circle img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
 }
 
-.book_card:hover {
-    transform: scale(1.05);
+.genre-circle:hover img {
+    transform: scale(1.1);
 }
 
-.book_card img {
-    width: 100%;
-    border-radius: 8px 8px 0 0;
-}
-
-/* Product Cards */
-.products_section {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
-}
-
-.card {
-    width: 280px;
-    border: none;
-    border-radius: 8px;
-    overflow: hidden;
-    background-color: #fff;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-.card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.card-body {
-    padding: 20px;
-    text-align: center;
-}
-
-.card-title {
-    font-size: 18px;
+.genre-circle p {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 500;
     color: #333;
-    margin-bottom: 10px;
 }
+
 
 /* Footer */
-/* Footer styling */
 .footer {
-    background-color: #1a1a1a;
-    color: #fff;
+    background-color: inherit;
+    color: #333;
     padding: 40px 20px;
     font-size: 14px;
     text-align: center;
+    border-top: 1px solid #e6e6e6;;
 }
 
 .footer-container {
@@ -165,14 +176,14 @@ body {
 .footer-column h4 {
     font-size: 16px;
     margin-bottom: 15px;
-    color: #f4f4f4;
+    color: #000;
 }
 
 .footer-column p,
 .footer-column ul,
 .footer-column a {
     font-size: 14px;
-    color: #ccc;
+    color: #333;
     line-height: 1.6;
     text-decoration: none;
 }
@@ -187,7 +198,7 @@ body {
 }
 
 .footer-column a:hover {
-    color: #ffffff;
+    color: #4b4b4b;
 }
 
 .social-icons a {
@@ -208,7 +219,7 @@ body {
 .footer-bottom {
     margin-top: 20px;
     font-size: 12px;
-    color: #777;
-    border-top: 1px solid #444;
+    color: #333;
+    border-top: 1px solid #e6e6e6;
     padding-top: 10px;
 }
