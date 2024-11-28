@@ -36,7 +36,6 @@ class Dimensions(models.Model):
     def __str__(self):
         return f"{self.height} x {self.width} x {self.depth} cm"
 
-
 class Book(models.Model):
     book_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)
