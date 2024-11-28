@@ -20,8 +20,6 @@ class genre(models.Model):
     def __str__(self):
         return self.name
 
-    class Meta:
-        db_table = 'genre'
 
 class book(models.Model):
     book_id = models.AutoField(primary_key=True)
@@ -34,8 +32,9 @@ class book(models.Model):
     cover_image = models.ImageField(upload_to='book_covers/')
     author = models.ForeignKey(author, on_delete=models.CASCADE)
     language = models.CharField(max_length=100)
-    dimensions = models.CharField(max_length=50, default='Unknown')
+    dimensions = models.ForeignKey(Dimensions, on_delete=models.SET_NULL, null=True, blank=True)
     page_count = models.IntegerField(null=True)
+    publisher = models.ForeignKey(Publisher, on_delete=models.SET_NULL, null=True, blank=True)  
 
     def __str__(self):
         return self.title
