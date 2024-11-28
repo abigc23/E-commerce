@@ -30,6 +30,18 @@ body {
     height: auto;
 }
 
+.dropdown-menu {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    grid-gap: 10px; 
+    width: 250px; 
+  }
+  
+.dropdown-item {
+    padding: 8px 12px; 
+    text-align: left; 
+  }
+
 /* Banner */
 .banner {
     width: 95%;
@@ -128,10 +140,11 @@ body {
 }
 
 .genre-circle img {
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
+    padding: 10px;
     border-radius: 50%;
-    object-fit: cover;
+    object-fit: scale-down;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
 }
@@ -207,12 +220,12 @@ body {
 }
 
 .social-icons img {
-    width: 24px;
-    height: 24px;
+    width: 30px;
+    height: 30px;
 }
 
 .social-icons a:hover {
-    transform: scale(1.1);
+    transform: scale(1.5);
     opacity: 0.8;
 }
 

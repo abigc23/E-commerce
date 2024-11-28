@@ -18,6 +18,23 @@ class Genre(models.Model):
     def __str__(self):
         return self.name
 
+class Publisher(models.Model):
+    publisher_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    address = models.TextField(null=True, blank=True)
+    website = models.URLField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Dimensions(models.Model):
+    height = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)  # Altura del libro
+    width = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)   # Ancho del libro
+    depth = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)   # Profundidad del libro
+
+    def __str__(self):
+        return f"{self.height} x {self.width} x {self.depth} cm"
 
 
 class Book(models.Model):
@@ -31,8 +48,9 @@ class Book(models.Model):
     cover_image = models.ImageField()
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     language = models.CharField(max_length=100)
-    dimensions = models.CharField(max_length=50, default='Unknown')
+    dimensions = models.ForeignKey(Dimensions, on_delete=models.SET_NULL, null=True, blank=True)
     page_count = models.IntegerField(null=True)
+    publisher = models.ForeignKey(Publisher, on_delete=models.SET_NULL, null=True, blank=True)  
 
     def __str__(self):
         return self.title
