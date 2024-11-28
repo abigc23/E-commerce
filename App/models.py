@@ -19,7 +19,6 @@ class Genre(models.Model):
         return self.name
 
 
-
 class Book(models.Model):
     book_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)
