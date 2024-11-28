@@ -15,6 +15,16 @@ body {
 
 /* Header */
 
+.navbar-nav ms-auto{
+    align-content: center;
+    display: flex;
+    justify-content: flex-end;
+}
+.navbar-nav .nav-item{
+    display: flex;
+    align-items: center;
+}
+
 .navbar-nav .nav-link {
     color: #333;
     margin-left: 20px;
@@ -23,6 +33,12 @@ body {
 
 .navbar-nav .nav-link:hover {
     color: #ddd;
+}
+
+.navbar-nav .userlogo{
+    width: 50px;
+    height: 50px;
+    margin-left: 15px;
 }
 
 .logotipo{
@@ -41,6 +57,7 @@ body {
     padding: 8px 12px; 
     text-align: left; 
   }
+
 
 /* Banner */
 .banner {
@@ -95,10 +112,11 @@ body {
 
 /* Main Content */
 .main_content {
-    padding: 20px 10%;
-    max-width: 1200px;
-    margin: auto;
+    width: 95%;          /* El ancho total será del 90% */
+    padding: 20px;       /* Espaciado interno (padding) uniforme */
+    margin: 0 auto;      /* Centra el contenido */
 }
+
 
 /* Intro Section */
 .intro_section {
@@ -122,6 +140,8 @@ body {
 .store_info p {
     font-size: 16px;
     color: #555;
+    max-width: 80%;
+    margin: 0 auto;
 }
 .genre-circles {
     display: flex;
@@ -168,7 +188,7 @@ body {
     padding: 40px 20px;
     font-size: 14px;
     text-align: center;
-    border-top: 1px solid #e6e6e6;;
+    border-top: 1px solid #e6e6e6;
 }
 
 .footer-container {
@@ -184,21 +204,34 @@ body {
     flex: 1;
     min-width: 200px;
     margin: 10px 0;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .footer-column h4 {
     font-size: 16px;
     margin-bottom: 15px;
     color: #000;
+    text-align: center; /* Centrado para el h4 */
+}
+
+.footer-column .item-col{
+    text-align: left;
+}
+
+.footer-column .details-footer{
+    text-align: center;
 }
 
 .footer-column p,
-.footer-column ul,
-.footer-column a {
+.footer-column li a {
     font-size: 14px;
     color: #333;
     line-height: 1.6;
     text-decoration: none;
+    text-align: left;
 }
 
 .footer-column ul {
@@ -231,8 +264,9 @@ body {
 
 .footer-bottom {
     margin-top: 20px;
-    font-size: 12px;
+    font-size: 16px;
     color: #333;
     border-top: 1px solid #e6e6e6;
     padding-top: 10px;
 }
+
