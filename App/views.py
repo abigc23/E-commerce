@@ -69,9 +69,9 @@ def signup(request):
 
 # Vista para logout
 def salir(request):
-    logout(request)
-    return redirect('home')
-
+    if request.user.is_authenticated:
+        logout(request)  
+    return redirect('home')  
 
 def Visualize(request):
     buscar = book.objects.all()
@@ -79,6 +79,37 @@ def Visualize(request):
         'forms': buscar
     }
     return render(request, 'pages/visualize.html', data)
+
+
+def userprofile(request):
+    if request.user.is_authenticated:
+        try:
+            customer_obj = request.user.customer
+            data = {
+                'user': {
+                    'name': customer_obj.user,
+                    'phone': customer_obj.phone,
+                    'address': customer_obj.address,
+                    'city': customer_obj.city,
+                    'postal_code': customer_obj.postal_code,
+                    'country': customer_obj.country,
+                },
+                'is_authenticated': True,
+            }
+        except customer.DoesNotExist:
+            data = {
+                'user': {
+                    'name': request.user.user,
+                },
+                'is_authenticated': True,
+                'error': 'No hay información adicional disponible.',
+            }
+    else:
+        data = {
+            'is_authenticated': False,
+        }
+    return render(request, 'userprofile.html', data)
+
 
 @login_required 
 def Add(request):
@@ -95,7 +126,6 @@ def Add(request):
     return render(request, 'pages/add.html', data)
 
 def carrito(request):
-    # Obtener los productos del carrito del cliente
     customer_id = request.user.id  
     carrito_items = cartitem.objects.filter(customer_id=customer_id)
     

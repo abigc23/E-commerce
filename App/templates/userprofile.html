@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Perfil de Usuario</h1>
+    {% if is_authenticated %}
+        <p><strong>Nombre:</strong> {{ user.name }}</p>
+        {% if user.phone %}
+            <p><strong>Teléfono:</strong> {{ user.phone }}</p>
+            <p><strong>Dirección:</strong> {{ user.address }}</p>
+            <p><strong>Ciudad:</strong> {{ user.city }}</p>
+            <p><strong>Código Postal:</strong> {{ user.postal_code }}</p>
+            <p><strong>País:</strong> {{ user.country }}</p>
+        {% else %}
+            <p>No se encontró información adicional del cliente.</p>
+        {% endif %}
+        <a href="{% url 'salir' %}" class="btn btn-danger">Cerrar sesión</a>
+        {% else %}
+        <p>No has iniciado sesión.</p>
+        <div>
+            <a href="{% url 'signin' %}" class="btn btn-primary">Iniciar Sesión</a>
+            <a href="{% url 'signup' %}" class="btn btn-secondary">Registrarse</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
