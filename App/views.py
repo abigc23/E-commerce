@@ -6,14 +6,14 @@ from .models import *
 # Create your views here.
 
 def Home(request):
-    buscar = Book.objects.all().order_by('book_id')[:3]
+    buscar = book.objects.all().order_by('book_id')[:3]
     data = {
         'forms': buscar
     }
     return render(request, 'index.html', data)
 
 def Visualize(request):
-    buscar = Book.objects.all()
+    buscar = book.objects.all()
     data = {
         'forms': buscar
     }
@@ -22,13 +22,13 @@ def Visualize(request):
 @login_required  
 def Add(request):
     data = {
-        'forms': NewBook()
+        'forms': Newbook()
     }
     if request.method == 'POST':
-        query = NewBook(data=request.POST, files=request.FILES)
+        query = Newbook(data=request.POST, files=request.FILES)
         if query.is_valid():
             query.save()
             data['message'] = "Datos registrados"
         else:
-            data['forms'] = NewBook()
+            data['forms'] = Newbook()
     return render(request, 'pages/add.html', data)
