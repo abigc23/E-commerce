@@ -35,8 +35,8 @@
                       Productos
                     </a>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="{% url 'books_by_genre' genre_id=1 %}">Romance</a></li>
-                      <li><a class="dropdown-item" href="{% url 'books_by_genre' genre_id=2 %}">Fantasía</a></li>
+                      <li><a class="dropdown-item" href="{% url 'books_by_genre' genre_id=2 %}">Romance</a></li>
+                      <li><a class="dropdown-item" href="{% url 'books_by_genre' genre_id=1 %}">Fantasía</a></li>
                       <li><a class="dropdown-item" href="{% url 'books_by_genre' genre_id=3 %}">Ciencia Ficción</a></li>
                       <li><a class="dropdown-item" href="">Misterio</a></li>
                       <li><a class="dropdown-item" href="">Literatura Juvenil</a></li>
@@ -146,16 +146,15 @@
 
 
         <!-- Last five books -->
-        
-        <div class="products_section">
-            {% for book in books %}
-            <div class="card" style="width: 300px; margin-top: 20px;">
-                <img src="{{book.cover_image}}" class="card-img-top" alt="Portada">
-                <div class="card-body">
-                  <h4 class="card-title">Título: {{book.title}}</h4>
-                </div>
-              </div>
-            {% endfor %}
+        <div class="category-books-list">
+          {% for book in books %}
+            <div class="category-book-item">
+              <img src="{{ book.cover_image.url }}" alt="{{ book.title }}" class="category-book-cover">
+              <h3 class="category-book-title">{{ book.title }}</h3>
+            </div>
+          {% empty %}
+            <p>No hay libros en disponibles.</p>
+          {% endfor %}
         </div>
 
         {% endblock %}
