@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required  
 from .forms import *
 from .models import *
@@ -8,6 +8,7 @@ from django.conf import settings
 # Create your views here.
 
 def Home(request):
+    genres = genre.objects.all() 
     buscar = book.objects.all().order_by('book_id')[:3]
     data = {
         'forms': buscar
@@ -51,6 +52,20 @@ def carrito(request):
     }
 
     return render(request, 'carrito/carrito.html', data)
+
+def books_by_genre(request, genre_id):
+    selected_genre = genre.objects.filter(genre_id=genre_id).first()
+
+    if not selected_genre:
+        selected_genre = None
+
+    books_in_genre = book.objects.filter(genre=selected_genre) if selected_genre else []
+
+    return render(request, 'books_by_genre.html', {
+        'genre': selected_genre,
+        'books': books_in_genre,
+    })
+
 
 
 @login_required
