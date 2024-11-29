@@ -32,9 +32,7 @@ class book(models.Model):
     cover_image = models.ImageField(upload_to='book_covers/')
     author = models.ForeignKey(author, on_delete=models.CASCADE)
     language = models.CharField(max_length=100)
-    dimensions = models.ForeignKey(Dimensions, on_delete=models.SET_NULL, null=True, blank=True)
     page_count = models.IntegerField(null=True)
-    publisher = models.ForeignKey(Publisher, on_delete=models.SET_NULL, null=True, blank=True)  
 
     def __str__(self):
         return self.title
