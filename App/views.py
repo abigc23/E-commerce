@@ -1,12 +1,16 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404,redirect
 from django.contrib.auth.decorators import login_required  
 from .forms import *
 from .models import *
 import mercadopago
+from django.contrib.auth.models import User
 from django.conf import settings
+from django.contrib.auth import login, logout, authenticate
+from django.db import IntegrityError
+from django.contrib.auth.decorators import login_required, permission_required
+from django.db.models import Q
 
 # Create your views here.
-
 def Home(request):
     genres = genre.objects.all() 
     buscar = book.objects.all().order_by('-publication_date')[:6]  
@@ -16,8 +20,45 @@ def Home(request):
     }
     return render(request, 'index.html', data)
 
+def login_views(request):
+    if request.method == 'GET':
+        return render(request, 'login/login.html', {
+        })
+    else:
+        user = authenticate(
+            request, username=request.POST['username'], password=request.POST['password'])
+        if user is None:
+            return render(request, 'signin.html', {
+                "error": 'username or password is incorrect'
+            })
+        else:
+            login(request, user)
+            return redirect(to='home')
+
+def signup(request):
+    if request.method == 'POST':
+        if request.POST['password1'] == request.POST['password2']:
+            try:
+                user = User.objects.create_user(username=request.POST['username'],
+                                                password=request.POST['password1'])
+                user.save()
+                login(request, user) 
+                return redirect('home')
+            except IntegrityError:
+                return render(request, 'login/signup.html', {
+                    "error": 'El nombre de usuario ya está en uso.'
+                })
+        else:
+            return render(request, 'login/signup.html', {
+                "error": 'Las contraseñas no coinciden.'
+            })
+    else:
+        return render(request, 'login/signup.html')
 
 
+def salir(request):
+    logout(request)
+    return redirect(to='home')
 
 def Visualize(request):
     buscar = book.objects.all()

@@ -11,7 +11,9 @@ urlpatterns = [
     path('carrito/', carrito, name='carrito'),  # Página del carrito
     path('pago/', pago, name='pago'),  # Página para hacer el pago
     path('categoria/<int:genre_id>/', books_by_genre, name='books_by_genre'),
-    path('payment/success/', PagoSuccess, name='pago_success'),
+    path('login/', login_views, name='logins'),
+    path('signup/', signup, name='signup'),
+    path('logout/', salir, name='salir'),    path('payment/success/', PagoSuccess, name='pago_success'),
     path('payment/failure/', PagoFailure, name='pago_failure'),
     path('payment/pending/', PagoPending, name='pago_pending'),
 ]
