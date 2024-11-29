@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 class author(models.Model):
     author_id = models.AutoField(primary_key=True)
@@ -57,6 +59,7 @@ class bookgenre(models.Model):
 
 class customer(models.Model):
     customer_id = models.AutoField(primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='customer', default=1)  # Asume que el ID 1 es un usuario predeterminado
     phone = models.CharField(max_length=20)
     address = models.TextField()
     city = models.CharField(max_length=50)

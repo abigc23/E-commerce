@@ -20,28 +20,45 @@ def Home(request):
     }
     return render(request, 'index.html', data)
 
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.db import IntegrityError
+from .models import customer
+
+# Vista para login
 def login_views(request):
     if request.method == 'GET':
-        return render(request, 'login/login.html', {
-        })
+        return render(request, 'login/login.html')
     else:
-        user = authenticate(
-            request, username=request.POST['username'], password=request.POST['password'])
+        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
-            return render(request, 'signin.html', {
-                "error": 'username or password is incorrect'
+            return render(request, 'login/login.html', {
+                "error": 'El nombre de usuario o la contraseña son incorrectos.'
             })
         else:
             login(request, user)
-            return redirect(to='home')
+            return redirect('home')
 
+# Vista para signup
 def signup(request):
     if request.method == 'POST':
         if request.POST['password1'] == request.POST['password2']:
             try:
-                user = User.objects.create_user(username=request.POST['username'],
-                                                password=request.POST['password1'])
+                # Crear el usuario
+                user = User.objects.create_user(username=request.POST['username'], password=request.POST['password1'])
                 user.save()
+
+                # Crear el cliente
+                customer_obj = customer.objects.create(
+                    user=user,
+                    phone=request.POST['phone'],
+                    address=request.POST['address'],
+                    city=request.POST['city'],
+                    postal_code=request.POST['postal_code'],
+                    country=request.POST['country'],
+                )
+                # Loguear al usuario
                 login(request, user) 
                 return redirect('home')
             except IntegrityError:
@@ -55,10 +72,11 @@ def signup(request):
     else:
         return render(request, 'login/signup.html')
 
-
+# Vista para logout
 def salir(request):
     logout(request)
-    return redirect(to='home')
+    return redirect('home')
+
 
 def Visualize(request):
     buscar = book.objects.all()
