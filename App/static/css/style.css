@@ -224,6 +224,34 @@ body {
     max-width: 95%;
 }
 
+/* seccion abajo de categoria home */
+.home-books-list {
+    display: flex;              
+    flex-wrap: wrap;            
+    gap: 20px;                   /* Espacio entre los libros */
+    justify-content: center;     /* Centra los libros en el contenedor */
+}
+  
+.home-book-item {
+  width: 200px;          
+  text-align: center;          
+  box-sizing: border-box;  
+}
+  
+.home-book-cover {
+  width: 100%;            
+  height: auto;                
+  border-radius: 8px;         
+}
+  
+.home-book-title {
+  margin-top: 10px;            
+  font-size: 16px;             
+  font-weight: bold;           
+}
+  
+
+
 
 /* Contenedor principal */
 .container {

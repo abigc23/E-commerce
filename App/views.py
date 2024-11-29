@@ -9,11 +9,15 @@ from django.conf import settings
 
 def Home(request):
     genres = genre.objects.all() 
-    buscar = book.objects.all().order_by('book_id')[:6]
+    buscar = book.objects.all().order_by('-publication_date')[:6]  
+
     data = {
-        'forms': buscar
+        'books': buscar  
     }
     return render(request, 'index.html', data)
+
+
+
 
 def Visualize(request):
     buscar = book.objects.all()

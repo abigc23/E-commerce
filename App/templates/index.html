@@ -146,17 +146,16 @@
 
 
         <!-- Last five books -->
-        <div class="category-books-list">
+        <div class="home-books-list">
           {% for book in books %}
-            <div class="category-book-item">
-              <img src="{{ book.cover_image.url }}" alt="{{ book.title }}" class="category-book-cover">
-              <h3 class="category-book-title">{{ book.title }}</h3>
-            </div>
+              <div class="home-book-item">
+                  <img src="{{ book.cover_image.url }}" alt="{{ book.title }}" class="home-book-cover">
+                  <h3 class="home-book-title">{{ book.title }}</h3>
+              </div>
           {% empty %}
-            <p>No hay libros en disponibles.</p>
+              <p>No hay libros disponibles.</p>
           {% endfor %}
-        </div>
-
+        </div>              
         {% endblock %}
     </main>
 
