@@ -1,0 +1,35 @@
+  <!-- Slide 1 -->
+                    <!-- <div class="carousel-item active" data-bs-interval="10000">
+                        <img src="{% static 'img/banner.jpeg' %}" class="d-block w-100" alt="Banner">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h2 class="banner_title">Un nuevo libro, una nueva aventura.</h2>
+                            <p class="banner_subtitle">Explora nuestra colección y encuentra historias que inspiran, enseñan y transportan a mundos increíbles.</p>
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="carousel-item" data-bs-interval="2000">
+                        <img src="{% static 'img/banner2.jpg' %}" class="d-block w-100" alt="Second Banner">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h2 class="banner_title">Descubre nuevas historias</h2>
+                            <p class="banner_subtitle">Navega por nuestras categorías y encuentra tu próximo libro favorito.</p>
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="carousel-item">
+                        <img src="{% static 'img/banner1.png' %}" class="d-block w-100" alt="Third Banner">
+                        <div class="carousel-caption d-none d-md-block">
+                            <a href="#" class="btn btn-primary mt-3">Explorar más</a>
+                        </div>
+                    </div>
+                    
+                </div>
+                <!-- Navigation Buttons -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div> 

@@ -60,46 +60,66 @@ body {
 
 
 /* Banner */
-.banner {
+/* General del Carrusel */
+.carousel {
     width: 95%;
-    max-height: 350px;
-    padding: 20px;
-    background-color: #fff3e6; 
-    border-radius: 40px; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
     margin: 20px auto;
+    border-radius: 40px;
+    overflow: hidden;
 }
 
-.banner_content {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    max-width: 90%;
+/* Imágenes del Carrusel */
+.carousel-item img {
+    object-fit: contain;
+    width: 100%;
+    height: auto; 
 }
 
-.banner_image {
-    width: 35%;
-    height: auto;
+/* Texto del Carrusel */
+.carousel-caption {
+    max-width: 70%;
+    margin: auto;
+    text-align: center;
+    color: #000; /* Color del texto (negro o ajusta según tu diseño) */
+    background: none; /* Sin fondo oscuro */
+    padding: 10px 0;
+}
+
+/* Botón */
+.carousel-caption a.btn {
+    background-color: #007bff; /* Azul Bootstrap */
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff; /* Texto blanco */
     border-radius: 8px;
 }
 
-.banner_text {
-    display: flex;
-    flex-direction: column;
-    max-width: 60%;
+.carousel-caption a.btn:hover {
+    background-color: red; /* Azul oscuro al hover */
 }
 
+.btn-banner2{
+    border-radius: 20px;
+    background-color: #007bff;
+    text-decoration: none;
+
+}
+
+.btn-banner2:hover{
+    background-color: #0056b3;
+}
+
+/* Títulos */
 .banner_title {
-    font-size: 28px;
-    color: #333;
-    margin-bottom: 10px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #000; /* Negro */
 }
 
 .banner_subtitle {
-    font-size: 16px;
-    color: #666;
+    font-size: 1.2rem;
+    color: #333; /* Gris oscuro */
 }
 
 /* Separator */
