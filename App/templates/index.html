@@ -35,9 +35,9 @@
                       Productos
                     </a>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="">Romance</a></li>
-                      <li><a class="dropdown-item" href="">Fantasía</a></li>
-                      <li><a class="dropdown-item" href="">Ciencia Ficción</a></li>
+                      <li><a class="dropdown-item" href="{% url 'books_by_genre' genre_id=1 %}">Romance</a></li>
+                      <li><a class="dropdown-item" href="{% url 'books_by_genre' genre_id=2 %}">Fantasía</a></li>
+                      <li><a class="dropdown-item" href="{% url 'books_by_genre' genre_id=3 %}">Ciencia Ficción</a></li>
                       <li><a class="dropdown-item" href="">Misterio</a></li>
                       <li><a class="dropdown-item" href="">Literatura Juvenil</a></li>
                       <li><a class="dropdown-item" href="">Historia</a></li>
@@ -107,44 +107,44 @@
                     próximo libro favorito!</p>
             </article>
         </div>
-
-        <!-- Categories -->
-
-        <div class="genre-circles">
-            <a href="" class="genre-circle">
-                <img src="{% static 'img/categories/Romance.jpg' %}" alt="Romance">
-                <p>Romance</p>
-            </a>
-            <a href="" class="genre-circle">
-                <img src="{% static 'img/categories/Fantasía.jpg' %}" alt="Fantasía">
-                <p>Fantasía</p>
-            </a>
-            <a href="" class="genre-circle">
-                <img src="{% static 'img/categories/Ciencia Ficción.jpg' %}" alt="Ciencia Ficción">
-                <p>Ciencia Ficción</p>
-            </a>
-            <a href="" class="genre-circle">
-                <img src="{% static 'img/categories/Misterio.jpg' %}" alt="Misterio">
-                <p>Misterio</p>
-            </a>
-            <a href="" class="genre-circle">
-                <img src="{% static 'img/categories/Literatura juvenil 2.png' %}" alt="Literatura Juvenil">
-                <p>Literatura Juvenil</p>
-            </a>
-            <a href="" class="genre-circle">
-                <img src="{% static 'img/categories/Historia.jpg' %}" alt="Historia">
-                <p>Historia</p>
-            </a>
-            <a href="" class="genre-circle">
-                <img src="{% static 'img/categories/Infantil.jpg' %}" alt="Infantil">
-                <p>Literatura Infantil</p>
-            </a>
-            <a href="" class="genre-circle">
-                <img src="{% static 'img/categories/Psicología.jpg' %}" alt="Psicología">
-                <p>Psicología</p>
-            </a>
-        </div>        
         
+        <!-- Categories -->
+        <div class="genre-circles">
+          <a class="genre-circle" href="{% url 'books_by_genre' genre_id=1 %}">
+              <img src="{% static 'img/categories/Romance.jpg' %}" alt="Romance">
+              <p>Romance</p>
+          </a>
+          <a href="{% url 'books_by_genre' genre_id=2 %}" class="genre-circle">
+              <img src="{% static 'img/categories/Fantasía.jpg' %}" alt="Fantasía">
+              <p>Fantasía</p>
+          </a>
+          <a href="{% url 'books_by_genre' genre_id=3 %}" class="genre-circle">
+              <img src="{% static 'img/categories/Ciencia Ficción.jpg' %}" alt="Ciencia Ficción">
+              <p>Ciencia Ficción</p>
+          </a>
+          <a href="{% url 'books_by_genre' genre_id=4 %}" class="genre-circle">
+              <img src="{% static 'img/categories/Misterio.jpg' %}" alt="Misterio">
+              <p>Misterio</p>
+          </a>
+          <a href="{% url 'books_by_genre' genre_id=5 %}" class="genre-circle">
+              <img src="{% static 'img/categories/Literatura juvenil 2.png' %}" alt="Literatura Juvenil">
+              <p>Literatura Juvenil</p>
+          </a>
+          <a href="{% url 'books_by_genre' genre_id=6 %}" class="genre-circle">
+              <img src="{% static 'img/categories/Historia.jpg' %}" alt="Historia">
+              <p>Historia</p>
+          </a>
+          <a href="{% url 'books_by_genre' genre_id=7 %}" class="genre-circle">
+              <img src="{% static 'img/categories/Infantil.jpg' %}" alt="Infantil">
+              <p>Literatura Infantil</p>
+          </a>
+          <a href="{% url 'books_by_genre' genre_id=8 %}" class="genre-circle">
+              <img src="{% static 'img/categories/Psicología.jpg' %}" alt="Psicología">
+              <p>Psicología</p>
+          </a>
+        </div>
+
+
         <!-- Last five books -->
         
         <div class="products_section">

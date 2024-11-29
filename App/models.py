@@ -33,12 +33,14 @@ class book(models.Model):
     author = models.ForeignKey(author, on_delete=models.CASCADE)
     language = models.CharField(max_length=100)
     page_count = models.IntegerField(null=True)
+    genre = models.ForeignKey(genre, on_delete=models.SET_NULL, null=True, blank=True)  # O usa null=True si quieres que sea opcional
 
     def __str__(self):
         return self.title
 
     class Meta:
         db_table = 'book'
+
 
 class bookgenre(models.Model):
     bookgenre_id = models.AutoField(primary_key=True)
@@ -51,6 +53,7 @@ class bookgenre(models.Model):
 
     def __str__(self):
         return f"{self.book.title} - {self.genre.name}"
+
 
 class customer(models.Model):
     customer_id = models.AutoField(primary_key=True)
