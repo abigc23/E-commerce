@@ -60,7 +60,6 @@ body {
 
 
 /* Banner */
-/* General del Carrusel */
 .carousel {
     width: 95%;
     margin: 20px auto;
@@ -68,47 +67,43 @@ body {
     overflow: hidden;
 }
 
-/* Imágenes del Carrusel */
+.carousel-item {
+    position: relative; /* Permite posicionar elementos dentro */
+}
+
 .carousel-item img {
     object-fit: contain;
     width: 100%;
-    height: auto; 
+    height: auto;
 }
 
-/* Texto del Carrusel */
 .carousel-caption {
-    max-width: 70%;
-    margin: auto;
-    text-align: center;
-    color: #000; /* Color del texto (negro o ajusta según tu diseño) */
-    background: none; /* Sin fondo oscuro */
-    padding: 10px 0;
+    position: absolute; /* Posicionamiento absoluto dentro del contenedor */
+    bottom: 20%; /* Espaciado desde el fondo */
+    left: 50%; /* Centrado horizontal */
+    transform: translateX(-50%); /* Asegura que esté perfectamente centrado */
+    color: white;
+    text-align: center; /* Centra el texto */
+    z-index: 1; /* Asegura que el texto esté por encima de la imagen */
 }
 
-/* Botón */
-.carousel-caption a.btn {
-    background-color: #007bff; /* Azul Bootstrap */
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    color: #fff; /* Texto blanco */
-    border-radius: 8px;
-}
-
-.carousel-caption a.btn:hover {
-    background-color: red; /* Azul oscuro al hover */
-}
-
-.btn-banner2{
+.btn-banner2 {
     border-radius: 20px;
     background-color: #007bff;
+    color: #ffffff;
     text-decoration: none;
-
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 10px; /* Espacio entre el texto y el botón */
+    transition: background-color 0.3s ease;
 }
 
-.btn-banner2:hover{
+.btn-banner2:hover {
     background-color: #0056b3;
 }
+
 
 /* Títulos */
 .banner_title {
