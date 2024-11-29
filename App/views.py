@@ -10,6 +10,7 @@ from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required, permission_required
 from django.db.models import Q
 
+
 # Create your views here.
 def Home(request):
     genres = genre.objects.all() 
@@ -19,12 +20,6 @@ def Home(request):
         'books': buscar  
     }
     return render(request, 'index.html', data)
-
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
-from django.db import IntegrityError
-from .models import customer
 
 # Vista para login
 def login_views(request):

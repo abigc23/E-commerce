@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 class author(models.Model):
     author_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
+    author_image = models.ImageField(upload_to='author_covers/', default='author_covers/default.jpg')
     bio = models.TextField()
     birth_date = models.DateField()
     nationality = models.CharField(max_length=50)
