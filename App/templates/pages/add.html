@@ -3,26 +3,27 @@
 {% load static %}
 
 {% block add %}
-    <img src="" alt="Img">
+    <img src="" alt="Img" class="add-image">
 {% endblock %}
 
 {% block content %}
-    <div class="container mt-5">
+    <div class="container-add">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="add-container">
-                    <h1 class="text-center mb-4">Añadir producto</h1>
+                    <h1 class="text-center mb-4">Añadir libro</h1>
 
                     <form action="" method="post" enctype="multipart/form-data">
                         {{ forms }}  <!-- Asegúrate de que el formulario se pase correctamente -->
                         {% csrf_token %}
-                        <div class="form-group">
-                            <input type="submit" value="Añadir" class="btn btn-success w-100">
+                        
+                        <div class="form-group mb-3">
+                            <input type="submit" value="Añadir" class="btn btn-primary w-100">
                         </div>
                         <div class="form-group mt-2">
                             <a href="" class="btn btn-secondary w-100">Ver productos</a>
                         </div>
-                        <p>{{ message }}</p>
+                        <p class="message">{{ message }}</p>
                     </form>
                 </div>
             </div>
