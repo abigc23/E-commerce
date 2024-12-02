@@ -21,6 +21,13 @@ def Home(request):
     }
     return render(request, 'index.html', data)
 
+
+def get_or_create_session_key(request):
+    if not request.session.session_key:
+        request.session.create()
+    return request.session.session_key
+
+
 # Vista para login
 def login_views(request):
     if request.method == 'GET':
@@ -53,7 +60,6 @@ def signup(request):
                     postal_code=request.POST['postal_code'],
                     country=request.POST['country'],
                 )
-                # Loguear al usuario
                 login(request, user) 
                 return redirect('home')
             except IntegrityError:
@@ -126,20 +132,40 @@ def Add(request):
     return render(request, 'pages/add.html', data)
 
 def carrito(request):
-    customer_id = request.user.id  
-    carrito_items = cartitem.objects.filter(customer_id=customer_id)
-    
+    if request.user.is_authenticated:
+        customer_id = request.user.customer.customer_id
+        carrito_items = cartitem.objects.filter(customer_id=customer_id)
+    else:
+        session_key = get_or_create_session_key(request)
+        carrito_items = cartitem.objects.filter(session_key=session_key)
+
     if not carrito_items:
         return render(request, 'carrito/empty_cart.html', {"message": "Tu carrito está vacío."})
 
     total_amount = sum([item.quantity * item.book.price for item in carrito_items])
-    
+
     data = {
         'carrito_items': carrito_items,
         'total_amount': total_amount,
     }
 
     return render(request, 'carrito/carrito.html', data)
+
+def remove_from_cart(request, book_id):
+    if request.user.is_authenticated:
+        customer_obj = request.user.customer
+        cart_item = cartitem.objects.filter(customer=customer_obj, book_id=book_id).first()
+        if cart_item:
+            cart_item.delete()
+    else:
+        cart = request.session.get('cart', {})
+        if str(book_id) in cart:
+            del cart[str(book_id)]
+            request.session['cart'] = cart  
+
+    return redirect('carrito')
+
+
 
 def books_by_genre(request, genre_id):
     selected_genre = genre.objects.filter(genre_id=genre_id).first()
@@ -153,6 +179,46 @@ def books_by_genre(request, genre_id):
         'genre': selected_genre,
         'books': books_in_genre,
     })
+
+def add_to_cart(request, book_id):
+    # Obtenemos o creamos una clave de sesión
+    session_key = get_or_create_session_key(request)
+    print(f"Session Key: {session_key}")
+    
+    # Obtenemos el libro seleccionado o lanzamos 404 si no existe
+    selected_book = get_object_or_404(book, pk=book_id)
+    print(f"Selected Book: {selected_book.title}, ID: {selected_book.id}")
+    
+    if request.user.is_authenticated:
+        print("User is authenticated.")
+        customer_obj = request.user.customer
+        print(f"Customer Object: {customer_obj}")
+        
+        # Intentamos obtener o crear el artículo del carrito
+        cart_item, created = cartitem.objects.get_or_create(
+            customer=customer_obj,
+            book=selected_book,
+            defaults={'quantity': 1}
+        )
+        print(f"Cart Item (Authenticated): {cart_item}, Created: {created}")
+    else:
+        print("User is not authenticated.")
+        # Si no está autenticado, usamos la session_key
+        cart_item, created = cartitem.objects.get_or_create(
+            session_key=session_key,
+            book=selected_book,
+            defaults={'quantity': 1}
+        )
+        print(f"Cart Item (Not Authenticated): {cart_item}, Created: {created}")
+    
+    # Si el artículo ya existía, incrementamos la cantidad
+    if not created:
+        print(f"Item already in cart, increasing quantity. Previous Quantity: {cart_item.quantity}")
+        cart_item.quantity += 1
+        cart_item.save()
+        print(f"New Quantity: {cart_item.quantity}")
+    
+    return redirect('carrito')
 
 
 

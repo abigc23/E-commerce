@@ -78,7 +78,8 @@
             {% block banner %}
             <div id="carouselExample" class="carousel slide">
                 <div class="carousel-inner">
-                  <div class="carousel-item active">
+                  <div class="carousel-item active<div class="separator"></div>
+                  ">
                     <img src="{% static 'img/banner1.png' %}" class="d-block w-100" alt="...">
                   </div>
                   <div class="carousel-item">
@@ -145,17 +146,30 @@
         </div>
 
 
-        <!-- Last five books -->
-        <div class="home-books-list">
-          {% for book in books %}
+          <!-- Last five books -->
+          <div class="home-books-list">
+            {% for book in books %}
               <div class="home-book-item">
-                  <img src="{{ book.cover_image.url }}" alt="{{ book.title }}" class="home-book-cover">
-                  <h3 class="home-book-title">{{ book.title }}</h3>
+                <img src="{{ book.cover_image.url }}" alt="{{ book.title }}" class="home-book-cover">
+                <h3 class="home-book-title">{{ book.title }}</h3>
+                
+                <!-- Formulario para agregar al carrito -->
+                {% if book.id %}
+                  <form action="{% url 'add_to_cart' book.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Agregar al carrito</button>
+                  </form>
+                {% else %}
+                  <p>Error: Este libro no tiene un ID válido.</p>
+                {% endif %}
+                
               </div>
-          {% empty %}
+            {% empty %}
               <p>No hay libros disponibles.</p>
-          {% endfor %}
-        </div>              
+            {% endfor %}
+          </div>
+          
+            
         {% endblock %}
     </main>
 

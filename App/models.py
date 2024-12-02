@@ -102,12 +102,17 @@ class orderitem(models.Model):
 
 
 class cartitem(models.Model):
-     cartitem_id = models.AutoField(primary_key=True)
-     customer = models.ForeignKey(customer, on_delete=models.CASCADE)
-     book = models.ForeignKey(book, on_delete=models.CASCADE)
-     quantity = models.IntegerField()
-     def __str__(self):
-         return f"{self.customer} - {self.book.title} - Quantity: {self.quantity}"
+    cartitem_id = models.AutoField(primary_key=True)
+    customer = models.ForeignKey(customer, on_delete=models.CASCADE, null=True, blank=True)
+    session_key = models.CharField(max_length=255, null=True, blank=True)  # Para usuarios no autenticados
+    book = models.ForeignKey(book, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+
+    def __str__(self):
+        if self.customer:
+            return f"{self.customer} - {self.book.title} - Quantity: {self.quantity}"
+        return f"Session: {self.session_key} - {self.book.title} - Quantity: {self.quantity}"
+
      
 class payment(models.Model):
      payment_id = models.AutoField(primary_key=True)
