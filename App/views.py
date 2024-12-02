@@ -30,9 +30,7 @@ def get_or_create_session_key(request):
 
 # Vista para login
 def login_views(request):
-    if request.method == 'GET':
-        return render(request, 'login/login.html')
-    else:
+    if request.method == 'POST':
         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
             return render(request, 'login/login.html', {
@@ -40,7 +38,11 @@ def login_views(request):
             })
         else:
             login(request, user)
+            if hasattr(user, 'customer'):
+                return redirect('userprofile')
             return redirect('home')
+    return render(request, 'login/login.html')
+
 
 # Vista para signup
 def signup(request):
@@ -60,7 +62,7 @@ def signup(request):
                     postal_code=request.POST['postal_code'],
                     country=request.POST['country'],
                 )
-                login(request, user) 
+                login(request, user)
                 return redirect('home')
             except IntegrityError:
                 return render(request, 'login/signup.html', {
@@ -70,8 +72,7 @@ def signup(request):
             return render(request, 'login/signup.html', {
                 "error": 'Las contraseñas no coinciden.'
             })
-    else:
-        return render(request, 'login/signup.html')
+    return render(request, 'login/signup.html')
 
 # Vista para logout
 def salir(request):
@@ -93,7 +94,7 @@ def userprofile(request):
             customer_obj = request.user.customer
             data = {
                 'user': {
-                    'name': customer_obj.user,
+                    'name': customer_obj.user.username,
                     'phone': customer_obj.phone,
                     'address': customer_obj.address,
                     'city': customer_obj.city,
@@ -104,9 +105,6 @@ def userprofile(request):
             }
         except customer.DoesNotExist:
             data = {
-                'user': {
-                    'name': request.user.user,
-                },
                 'is_authenticated': True,
                 'error': 'No hay información adicional disponible.',
             }
@@ -115,7 +113,6 @@ def userprofile(request):
             'is_authenticated': False,
         }
     return render(request, 'userprofile.html', data)
-
 
 @login_required 
 def Add(request):
