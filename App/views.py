@@ -16,7 +16,8 @@ from django.utils.timezone import now
 # Create your views here.
 def Home(request):
     genres = genre.objects.all() 
-    buscar = book.objects.all().order_by('-publication_date')[:6]  
+    buscar = book.objects.all()
+    # order_by('-publication_date')[:6]  
 
     data = {
         'books': buscar  
@@ -129,6 +130,25 @@ def Add(request):
         else:
             data['forms'] = Newbook()
     return render(request, 'pages/add.html', data)
+
+
+@login_required
+def modificar_book(request, book_id):
+    libro = get_object_or_404(book, book_id=book_id)
+    data = {
+        'forms_modi': Newbook(instance=libro)
+    }
+    if request.method == 'POST':
+        query = Newbook(data=request.POST, files=request.FILES, instance=libro)
+        if query.is_valid():
+            query.save()
+            data['mensaje'] = "Datos modificados correctamente"
+        else:
+            data['forms_modi'] = query
+
+    return render(request, 'pages/modificar.html', data)
+
+
 
 def carrito(request):
     if request.user.is_authenticated:
