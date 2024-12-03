@@ -12,7 +12,9 @@
 <div class="category-books-list">
   {% for book in books %}
     <div class="category-book-item">
-      <img src="{{ book.cover_image.url }}" alt="{{ book.title }}" class="category-book-cover">
+      <a href="{% url 'book_detail' book.book_id %}">
+        <img src="{{ book.cover_image.url }}" alt="{{ book.title }}" class="category-book-cover">
+      </a>    
       <h3 class="category-book-title">{{ book.title }}</h3>
     </div>
   {% empty %}

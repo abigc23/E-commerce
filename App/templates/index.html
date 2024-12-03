@@ -48,7 +48,10 @@
                     </ul>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url 'visualize' %}">Nosotros</a>
+                    <a class="nav-link" href="#contact_btn">Nosotros</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'visualize' %}">Todos los productos</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#contact_btn">Contacto</a>
@@ -149,8 +152,9 @@
             {% for book in books %}
                 <div class="home-book-item">
                     <!-- Imagen de la portada -->
-                    <img src="{{ book.cover_image.url }}" alt="{{ book.title }}" class="home-book-cover">
-        
+                    <a href="{% url 'book_detail' book.book_id %}">
+                      <img src="{{ book.cover_image.url }}" class="card-img-top" alt="Portada del libro">
+                    </a>            
                     <!-- Título del libro -->
                     <h3 class="home-book-title">{{ book.title }}</h3>
         

@@ -7,10 +7,11 @@ urlpatterns = [
     #-->URL, FUNCION, NOMBRE PARA HTML
     path('', Home, name='home'),
     path('visualize/', Visualize, name='visualize'),
+    path('book/<int:book_id>/', book_detail, name='book_detail'),
     path('add/', Add, name="add"),
     path('userprofile/', userprofile, name='userprofile'),
     path('carrito/', carrito, name='carrito'),
-    path('modificar/<int:book_id>/', modificar_book, name='modificar_book'),
+    path('modificar/<int:book_id>/', modificar_book_author_genre, name='modificar_book'),
     path('add_to_cart/<int:book_id>/', add_to_cart, name='add_to_cart'),
     path('carrito/remove/<int:book_id>/',remove_from_cart, name='remove_from_cart'),    
     path('categoria/<int:genre_id>/', books_by_genre, name='books_by_genre'),

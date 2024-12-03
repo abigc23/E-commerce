@@ -86,10 +86,13 @@ def salir(request):
 def Visualize(request):
     buscar = book.objects.all()
     data = {
-        'forms': buscar
+        'books': buscar
     }
     return render(request, 'pages/visualize.html', data)
 
+def book_detail(request, book_id):
+    libro = get_object_or_404(book, book_id=book_id)
+    return render(request, 'pages/book_detail.html', {'book': libro})
 
 def userprofile(request):
     if request.user.is_authenticated:
@@ -133,7 +136,7 @@ def Add(request):
 
 
 @login_required
-def modificar_book(request, book_id):
+def modificar_book_author_genre(request, book_id):
     libro = get_object_or_404(book, book_id=book_id)
     data = {
         'forms_modi': Newbook(instance=libro)

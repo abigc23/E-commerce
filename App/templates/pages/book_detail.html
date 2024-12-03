@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="container my-4">
+    <h1 class="mb-4">{{ book.title }}</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <img src="{{ book.cover_image.url }}" alt="{{ book.title }}" class="img-fluid">
+        </div>
+        <div class="col-md-8">
+            <p><strong>Descripción:</strong> {{ book.description }}</p>
+            <p><strong>Fecha de Publicación:</strong> {{ book.publication_date }}</p>
+            <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+            <p><strong>Precio:</strong> ${{ book.price }}</p>
+            <p><strong>Stock Disponible:</strong> {{ book.stock }}</p>
+            <p><strong>Autor:</strong> {{ book.author.name }}</p>
+            <p><strong>Idioma:</strong> {{ book.language }}</p>
+            <p><strong>Número de Páginas:</strong> {{ book.page_count }}</p>
+            <p><strong>Género:</strong> {{ book.genre.name }}</p>
+            <a href="{% url 'carrito' %}" class="btn btn-primary">Añadir al Carrito</a>
+            <a href="{% url 'home' %}" class="btn btn-secondary">Volver a la Lista</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
