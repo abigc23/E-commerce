@@ -1,40 +1,42 @@
 {% extends 'index.html' %}
 
 {% block content %}
-<h1>Tu carrito</h1>
-{% if carrito_items %}
-    <table>
-        <thead>
-            <tr>
-                <th>Imagen</th>
-                <th>Libro</th>
-                <th>Precio</th>
-                <th>Cantidad</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in carrito_items %}
+<div class="container">
+    <h1 class="title">Tu carrito</h1>
+    {% if carrito_items %}
+        <table class="table">
+            <thead class="table-header">
                 <tr>
-                    <td><img src="{{ item.book.image.url }}" alt="{{ item.book.title }}" width="100"></td>
-                    <td>{{ item.book.title }}</td>
-                    <td>${{ item.book.price }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td>${{ item.quantity}}</td>
+                    <th>Imagen</th>
+                    <th>Libro</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <h3>Total: ${{ total_amount }}</h3>
-{% else %}
-    <p>Tu carrito está vacío.</p>
-{% endif %}
-<a href="{% url 'home' %}">Seguir comprando</a>
-
-<div class="row mt-4">
-    <div class="col-12">
-        <a href="{{ payment_url }}" target="_blank">
-            <button class="btn btn-primary">Pagar con Mercado Pago</button>
-        </a>
+            </thead>
+            <tbody>
+                {% for item in carrito_items %}
+                    <tr class="table-row">
+                        <td class="table-cell image-cell">
+                            <img src="{{ item.book.cover_image.url }}" alt="{{ item.book.title }}" width="100">
+                        </td>
+                        <td class="table-cell">{{ item.book.title }}</td>
+                        <td class="table-cell">${{ item.book.price }}</td>
+                        <td class="table-cell">{{ item.quantity }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3 class="subtitle">Total: ${{ total_amount }}</h3>
+    {% else %}
+        <p class="subtitle">Tu carrito está vacío.</p>
+    {% endif %}
+    <a href="{% url 'home' %}" class="link">Seguir comprando</a>
+    <div class="row">
+        <div class="col-12">
+            <a href="{{ payment_url }}" target="_blank">
+                <button class="button">Pagar con Mercado Pago</button>
+            </a>
+        </div>
     </div>
 </div>
 {% endblock %}
