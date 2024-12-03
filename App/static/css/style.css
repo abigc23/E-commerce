@@ -618,13 +618,39 @@ form input:focus, form textarea:focus {
     background-color: #27ae60;
 }
 /* Contenedor de pago */
-.row {
+.pago {
     display: flex;
     justify-content: center;
     margin: 20px 0;
 }
 
-.col-12 {
+.pago2 {
     text-align: center;
 }
+.pago-3 {
+    background-color: #00aaff; 
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+    display: inline-block;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pago-3:hover {
+    background-color: #0088cc; 
+    transform: scale(1.05);
+}
+
+.pago-3:active {
+    background-color: #006699; 
+    transform: scale(1); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 

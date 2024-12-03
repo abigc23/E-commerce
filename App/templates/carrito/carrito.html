@@ -31,12 +31,13 @@
         <p class="subtitle">Tu carrito está vacío.</p>
     {% endif %}
     <a href="{% url 'home' %}" class="link">Seguir comprando</a>
-    <div class="row">
-        <div class="col-12">
+    <div class="pago">
+        <div class="pago2">
             <a href="{{ payment_url }}" target="_blank">
-                <button class="button">Pagar con Mercado Pago</button>
+                <button class="pago-3">Pagar con Mercado Pago</button>
             </a>
         </div>
     </div>
+    
 </div>
 {% endblock %}
