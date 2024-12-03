@@ -101,6 +101,7 @@ class orderitem(models.Model):
         db_table = 'orderitem'
 
 
+
 class cartitem(models.Model):
     cartitem_id = models.AutoField(primary_key=True)
     customer = models.ForeignKey(customer, on_delete=models.CASCADE, null=True, blank=True)

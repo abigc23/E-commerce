@@ -9,6 +9,8 @@ from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required, permission_required
 from django.db.models import Q
+from django.utils.timezone import now
+
 
 
 # Create your views here.
@@ -131,13 +133,14 @@ def Add(request):
 def carrito(request):
     if request.user.is_authenticated:
         customer_id = request.user.customer.customer_id
-        carrito_items = cartitem.objects.filter(customer_id=customer_id)
+        carrito_items = cartitem.objects.filter(customer_id=customer_id).select_related('book')
+        total_amount = sum(item.quantity * item.book.price for item in carrito_items)
     else:
         session_key = get_or_create_session_key(request)
-        carrito_items = cartitem.objects.filter(session_key=session_key)
+        carrito_items = cartitem.objects.filter(session_key=session_key).select_related('book')
 
     if not carrito_items:
-        return render(request, 'carrito/empty_cart.html', {"message": "Tu carrito está vacío."})
+        return render(request, 'carrito/carrito.html', {"message": "Tu carrito está vacío."})
 
     total_amount = sum([item.quantity * item.book.price for item in carrito_items])
 
@@ -145,9 +148,12 @@ def carrito(request):
         'carrito_items': carrito_items,
         'total_amount': total_amount,
     }
+    return render(request, 'carrito/carrito.html', {
+        'carrito_items': carrito_items,
+        'total_amount': total_amount,
+    })
 
-    return render(request, 'carrito/carrito.html', data)
-
+    
 def remove_from_cart(request, book_id):
     if request.user.is_authenticated:
         customer_obj = request.user.customer
@@ -178,45 +184,36 @@ def books_by_genre(request, genre_id):
     })
 
 def add_to_cart(request, book_id):
-    # Obtenemos o creamos una clave de sesión
     session_key = get_or_create_session_key(request)
     print(f"Session Key: {session_key}")
     
-    # Obtenemos el libro seleccionado o lanzamos 404 si no existe
-    selected_book = get_object_or_404(book, pk=book_id)
-    print(f"Selected Book: {selected_book.title}, ID: {selected_book.id}")
+    selected_book = get_object_or_404(book, book_id=book_id)
+    print(f"Selected Book: {selected_book.title}, ID: {selected_book.book_id}")
     
     if request.user.is_authenticated:
         print("User is authenticated.")
         customer_obj = request.user.customer
         print(f"Customer Object: {customer_obj}")
         
-        # Intentamos obtener o crear el artículo del carrito
         cart_item, created = cartitem.objects.get_or_create(
             customer=customer_obj,
             book=selected_book,
             defaults={'quantity': 1}
         )
-        print(f"Cart Item (Authenticated): {cart_item}, Created: {created}")
     else:
         print("User is not authenticated.")
-        # Si no está autenticado, usamos la session_key
         cart_item, created = cartitem.objects.get_or_create(
             session_key=session_key,
             book=selected_book,
             defaults={'quantity': 1}
         )
-        print(f"Cart Item (Not Authenticated): {cart_item}, Created: {created}")
     
-    # Si el artículo ya existía, incrementamos la cantidad
     if not created:
-        print(f"Item already in cart, increasing quantity. Previous Quantity: {cart_item.quantity}")
         cart_item.quantity += 1
         cart_item.save()
-        print(f"New Quantity: {cart_item.quantity}")
+        print(f"Quantity updated: {cart_item.quantity}")
     
     return redirect('carrito')
-
 
 
 @login_required
@@ -225,9 +222,9 @@ def pago(request):
     carrito = cartitem.objects.filter(customer_id=customer_id)
     
     if not carrito:
-        return render(request, 'carrito/empty_cart.html', {"message": "Tu carrito está vacío."})
+        return render(request, 'carrito/pago.html', {"message": "Tu carrito está vacío."})
 
-    total_amount = sum([item.quantity * item.book.price for item in carrito])
+    total_amount = sum(item.quantity * item.book.price for item in carrito)
     
     sdk = mercadopago.SDK(settings.MERCADOPAGO_ACCESS_TOKEN)
     items = []
@@ -253,7 +250,7 @@ def pago(request):
 
     order_obj = order.objects.create(
         customer_id=customer_id,
-        order_date=request.timestamp,
+        order_date=now(),
         status="Pendiente",
         total_amount=total_amount,
         total_paid=0,

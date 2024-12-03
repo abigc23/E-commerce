@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends 'index.html' %}
 
 {% block content %}
 <h1>Tu carrito</h1>
@@ -6,6 +6,7 @@
     <table>
         <thead>
             <tr>
+                <th>Imagen</th>
                 <th>Libro</th>
                 <th>Precio</th>
                 <th>Cantidad</th>
@@ -15,10 +16,11 @@
         <tbody>
             {% for item in carrito_items %}
                 <tr>
-                    <td>{{ item.title }}</td>
-                    <td>${{ item.price }}</td>
+                    <td><img src="{{ item.book.image.url }}" alt="{{ item.book.title }}" width="100"></td>
+                    <td>{{ item.book.title }}</td>
+                    <td>${{ item.book.price }}</td>
                     <td>{{ item.quantity }}</td>
-                    <td>${{ item.total }}</td>
+                    <td>${{ item.quantity}}</td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -28,4 +30,12 @@
     <p>Tu carrito está vacío.</p>
 {% endif %}
 <a href="{% url 'home' %}">Seguir comprando</a>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <a href="{{ payment_url }}" target="_blank">
+            <button class="btn btn-primary">Pagar con Mercado Pago</button>
+        </a>
+    </div>
+</div>
 {% endblock %}
