@@ -9,6 +9,7 @@ urlpatterns = [
     path('visualize/', Visualize, name='visualize'),
     path('book/<int:book_id>/', book_detail, name='book_detail'),
     path('add/', Add, name="add"),
+    path('error_page/', error_page, name="error_page"),
     path('userprofile/', userprofile, name='userprofile'),
     path('carrito/', carrito, name='carrito'),
     path('modificar/<int:book_id>/', modificar_book_author_genre, name='modificar_book'),

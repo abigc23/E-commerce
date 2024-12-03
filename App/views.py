@@ -10,6 +10,8 @@ from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required, permission_required
 from django.db.models import Q
 from django.utils.timezone import now
+from django.db.models import ObjectDoesNotExist
+
 
 
 
@@ -154,9 +156,18 @@ def modificar_book_author_genre(request, book_id):
 
 
 def carrito(request):
+    carrito_items = []
+    customer_id = None
+
     if request.user.is_authenticated:
-        customer_id = request.user.customer.customer_id
-        carrito_items = cartitem.objects.filter(customer_id=customer_id).select_related('book')
+        try:
+            customer_id = request.user.customer.customer_id
+            carrito_items = cartitem.objects.filter(customer_id=customer_id).select_related('book')
+        except ObjectDoesNotExist:
+            # Manejo del caso donde el usuario no tiene un perfil customer asociado
+            return render(request, 'carrito/carrito.html', {
+                "message": "No tienes un perfil de cliente asociado. Por favor, contacta al soporte."
+            })
     else:
         session_key = get_or_create_session_key(request)
         carrito_items = cartitem.objects.filter(session_key=session_key).select_related('book')
@@ -210,6 +221,10 @@ def carrito(request):
 
     return render(request, 'carrito/carrito.html', data)
 
+def error_page(request):
+    return render(request, 'error_page.html', {
+        'message': "Ha ocurrido un error. Por favor, contacta al soporte o inténtalo más tarde."
+    })
     
 def remove_from_cart(request, book_id):
     if request.user.is_authenticated:
@@ -240,6 +255,8 @@ def books_by_genre(request, genre_id):
         'books': books_in_genre,
     })
 
+from django.core.exceptions import ObjectDoesNotExist
+
 def add_to_cart(request, book_id):
     session_key = get_or_create_session_key(request)
     print(f"Session Key: {session_key}")
@@ -249,14 +266,18 @@ def add_to_cart(request, book_id):
     
     if request.user.is_authenticated:
         print("User is authenticated.")
-        customer_obj = request.user.customer
-        print(f"Customer Object: {customer_obj}")
-        
-        cart_item, created = cartitem.objects.get_or_create(
-            customer=customer_obj,
-            book=selected_book,
-            defaults={'quantity': 1}
-        )
+        try:
+            customer_obj = request.user.customer
+            print(f"Customer Object: {customer_obj}")
+            
+            cart_item, created = cartitem.objects.get_or_create(
+                customer=customer_obj,
+                book=selected_book,
+                defaults={'quantity': 1}
+            )
+        except ObjectDoesNotExist:
+            print("Authenticated user has no customer profile.")
+            return redirect('error_page')  # Ajusta 'error_page' a la URL de tu página de error.
     else:
         print("User is not authenticated.")
         cart_item, created = cartitem.objects.get_or_create(
@@ -271,6 +292,7 @@ def add_to_cart(request, book_id):
         print(f"Quantity updated: {cart_item.quantity}")
     
     return redirect('carrito')
+
 
 def PagoSuccess(request):
     return render(request, 'carrito/pago_success.html', {"message": "¡Pago exitoso!"})
