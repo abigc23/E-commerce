@@ -2,6 +2,8 @@ from django.urls import path
 #-->Importamos las Vistas para las URL
 from .views import *
 from .forms import *
+from django.contrib.auth.views import LoginView
+
 
 urlpatterns = [
     #-->URL, FUNCION, NOMBRE PARA HTML
@@ -17,6 +19,7 @@ urlpatterns = [
     path('carrito/remove/<int:book_id>/',remove_from_cart, name='remove_from_cart'),    
     path('categoria/<int:genre_id>/', books_by_genre, name='books_by_genre'),
     path('login/', login_views, name='signin'),
+    path('accounts/login/', login_views, {'template_name': 'login/login.html'}, name='login'),
     path('signup/', signup, name='signup'),
     path('logout/', salir, name='salir'),
     path('payment/success/', PagoSuccess, name='pago_success'),

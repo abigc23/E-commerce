@@ -34,11 +34,11 @@ def get_or_create_session_key(request):
 
 
 # Vista para login
-def login_views(request):
+def login_views(request, template_name='login/login.html'):
     if request.method == 'POST':
         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
-            return render(request, 'login/login.html', {
+            return render(request, template_name, {
                 "error": 'El nombre de usuario o la contraseña son incorrectos.'
             })
         else:
@@ -46,7 +46,8 @@ def login_views(request):
             if hasattr(user, 'customer'):
                 return redirect('userprofile')
             return redirect('home')
-    return render(request, 'login/login.html')
+    return render(request, template_name)
+
 
 
 # Vista para signup
@@ -122,7 +123,7 @@ def userprofile(request):
         }
     return render(request, 'userprofile.html', data)
 
-@login_required 
+@login_required
 def Add_book_author_genre(request):
     data = {
         'book_form': Newbook(),
@@ -132,48 +133,68 @@ def Add_book_author_genre(request):
 
     if request.method == 'POST':
         book_query = Newbook(data=request.POST, files=request.FILES)
-        author_query = NewAuthor(data=request.POST, files=request.FILES)
+        if 'book_title' in request.POST:  
+            if book_query.is_valid():
+                book_query.save()
+                data['message_book'] = "Libro registrado correctamente"
+            else:
+                data['message_book'] = "Error al registrar el libro"
+
+        # Formulario de autor
+        author_query = NewAuthor(data=request.POST)
+        if 'author_name' in request.POST:
+            if author_query.is_valid():
+                author_query.save()
+                data['message_author'] = "Autor registrado correctamente"
+            else:
+                data['message_author'] = "Error al registrar el autor"
+
+        # Formulario de género
         genre_query = NewGenre(data=request.POST)
-        if book_query.is_valid():
-            book_query.save()
-            data['message_book'] = "Libro registrado correctamente"
+        if 'genre_name' in request.POST:  
+            if genre_query.is_valid():
+                genre_query.save()
+                data['message_genre'] = "Género registrado correctamente"
+            else:
+                data['message_genre'] = "Error al registrar el género"
 
-        if author_query.is_valid():
-            author_query.save()
-            data['message_author'] = "Autor registrado correctamente"
-
-        if genre_query.is_valid():
-            genre_query.save()
-            data['message_genre'] = "Género registrado correctamente"
         data['book_form'] = book_query
         data['author_form'] = author_query
         data['genre_form'] = genre_query
 
     return render(request, 'pages/add.html', data)
 
-
 # ruben
+@login_required
 def modificar_book_author_genre(request, book_id):
     try:
         libro = get_object_or_404(book, book_id=book_id)
         autor = libro.author
         genero = libro.genre
+        
         book_form = Newbook(instance=libro)
         author_form = NewAuthor(instance=autor)
         genre_form = NewGenre(instance=genero) if genero else None
 
         if request.method == 'POST':
-            book_form = Newbook(request.POST, request.FILES, instance=libro)
-            author_form = NewAuthor(request.POST, request.FILES, instance=autor)
-            if genero:
-                genre_form = NewGenre(request.POST, instance=genero)
+            if 'book_title' in request.POST:  
+                book_form = Newbook(request.POST, request.FILES, instance=libro)
+                if book_form.is_valid():
+                    book_form.save()
+                    return redirect('success_page')  
 
-            if book_form.is_valid() and author_form.is_valid() and (genre_form.is_valid() if genero else True):
-                book_form.save()
-                author_form.save()
-                if genero:
+            if 'author_name' in request.POST:  
+                author_form = NewAuthor(request.POST, instance=autor)
+                if author_form.is_valid():
+                    author_form.save()
+                    return redirect('success_page')  
+
+            if genero and 'genre_name' in request.POST:  
+                genre_form = NewGenre(request.POST, instance=genero)
+                if genre_form.is_valid():
                     genre_form.save()
-                return redirect('success_page')  
+                    return redirect('success_page')  
+
         data = {
             'book_form': book_form,
             'author_form': author_form,
@@ -183,8 +204,7 @@ def modificar_book_author_genre(request, book_id):
 
     except Exception as e:
         print(f"Error: {e}")
-        return redirect('error_page') 
-
+        return redirect('error_page')
 
 
 def carrito(request):
@@ -285,8 +305,7 @@ def books_by_genre(request, genre_id):
         'books': books_in_genre,
     })
 
-from django.core.exceptions import ObjectDoesNotExist
-
+@login_required
 def add_to_cart(request, book_id):
     session_key = get_or_create_session_key(request)
     print(f"Session Key: {session_key}")
