@@ -123,18 +123,34 @@ def userprofile(request):
     return render(request, 'userprofile.html', data)
 
 @login_required 
-def Add(request):
+def Add_book_author_genre(request):
     data = {
-        'forms': Newbook()
+        'book_form': Newbook(),
+        'author_form': NewAuthor(),
+        'genre_form': NewGenre(),
     }
+
     if request.method == 'POST':
-        query = Newbook(data=request.POST, files=request.FILES)
-        if query.is_valid():
-            query.save()
-            data['message'] = "Datos registrados"
-        else:
-            data['forms'] = Newbook()
+        book_query = Newbook(data=request.POST, files=request.FILES)
+        author_query = NewAuthor(data=request.POST, files=request.FILES)
+        genre_query = NewGenre(data=request.POST)
+        if book_query.is_valid():
+            book_query.save()
+            data['message_book'] = "Libro registrado correctamente"
+
+        if author_query.is_valid():
+            author_query.save()
+            data['message_author'] = "Autor registrado correctamente"
+
+        if genre_query.is_valid():
+            genre_query.save()
+            data['message_genre'] = "Género registrado correctamente"
+        data['book_form'] = book_query
+        data['author_form'] = author_query
+        data['genre_form'] = genre_query
+
     return render(request, 'pages/add.html', data)
+
 
 # ruben
 def modificar_book_author_genre(request, book_id):
