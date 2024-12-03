@@ -137,21 +137,37 @@ def Add(request):
     return render(request, 'pages/add.html', data)
 
 # ruben
-@login_required
 def modificar_book_author_genre(request, book_id):
-    libro = get_object_or_404(book, book_id=book_id)
-    data = {
-        'forms_modi': Newbook(instance=libro)
-    }
-    if request.method == 'POST':
-        query = Newbook(data=request.POST, files=request.FILES, instance=libro)
-        if query.is_valid():
-            query.save()
-            data['mensaje'] = "Datos modificados correctamente"
-        else:
-            data['forms_modi'] = query
+    try:
+        libro = get_object_or_404(book, book_id=book_id)
+        autor = libro.author
+        genero = libro.genre
+        book_form = Newbook(instance=libro)
+        author_form = NewAuthor(instance=autor)
+        genre_form = NewGenre(instance=genero) if genero else None
 
-    return render(request, 'pages/modificar.html', data)
+        if request.method == 'POST':
+            book_form = Newbook(request.POST, request.FILES, instance=libro)
+            author_form = NewAuthor(request.POST, request.FILES, instance=autor)
+            if genero:
+                genre_form = NewGenre(request.POST, instance=genero)
+
+            if book_form.is_valid() and author_form.is_valid() and (genre_form.is_valid() if genero else True):
+                book_form.save()
+                author_form.save()
+                if genero:
+                    genre_form.save()
+                return redirect('success_page')  
+        data = {
+            'book_form': book_form,
+            'author_form': author_form,
+            'genre_form': genre_form,
+        }
+        return render(request, 'pages/modificar.html', data)
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return redirect('error_page') 
 
 
 
