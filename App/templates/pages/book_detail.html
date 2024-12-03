@@ -17,8 +17,13 @@
             <p><strong>Idioma:</strong> {{ book.language }}</p>
             <p><strong>Número de Páginas:</strong> {{ book.page_count }}</p>
             <p><strong>Género:</strong> {{ book.genre.name }}</p>
-            <a href="{% url 'carrito' %}" class="btn btn-primary">Añadir al Carrito</a>
-            <a href="{% url 'home' %}" class="btn btn-secondary">Volver a la Lista</a>
+            
+            {% if user.is_authenticated and not user.is_superuser %}
+                <a href="{% url 'carrito' %}" class="btn btn-primary">Añadir al Carrito</a>
+                <a href="{% url 'home' %}" class="btn btn-secondary">Volver a la Lista</a>
+            {% elif user.is_superuser %}
+            <a class="nav-link" href="{% url 'modificar_book' book_id=book.book_id %}">Modificar</a>
+            {% endif %}
         </div>
     </div>
 </div>

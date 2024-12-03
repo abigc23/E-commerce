@@ -16,6 +16,7 @@ from django.db.models import ObjectDoesNotExist
 
 
 # Create your views here.
+# ruben
 def Home(request):
     genres = genre.objects.all() 
     buscar = book.objects.all()
@@ -25,7 +26,6 @@ def Home(request):
         'books': buscar  
     }
     return render(request, 'index.html', data)
-
 
 def get_or_create_session_key(request):
     if not request.session.session_key:
@@ -136,7 +136,7 @@ def Add(request):
             data['forms'] = Newbook()
     return render(request, 'pages/add.html', data)
 
-
+# ruben
 @login_required
 def modificar_book_author_genre(request, book_id):
     libro = get_object_or_404(book, book_id=book_id)
@@ -225,7 +225,7 @@ def error_page(request):
     return render(request, 'error_page.html', {
         'message': "Ha ocurrido un error. Por favor, contacta al soporte o inténtalo más tarde."
     })
-    
+
 def remove_from_cart(request, book_id):
     if request.user.is_authenticated:
         customer_obj = request.user.customer
@@ -239,8 +239,6 @@ def remove_from_cart(request, book_id):
             request.session['cart'] = cart  
 
     return redirect('carrito')
-
-
 
 def books_by_genre(request, genre_id):
     selected_genre = genre.objects.filter(genre_id=genre_id).first()
