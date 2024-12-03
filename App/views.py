@@ -134,7 +134,6 @@ def carrito(request):
     if request.user.is_authenticated:
         customer_id = request.user.customer.customer_id
         carrito_items = cartitem.objects.filter(customer_id=customer_id).select_related('book')
-        total_amount = sum(item.quantity * item.book.price for item in carrito_items)
     else:
         session_key = get_or_create_session_key(request)
         carrito_items = cartitem.objects.filter(session_key=session_key).select_related('book')
@@ -142,16 +141,51 @@ def carrito(request):
     if not carrito_items:
         return render(request, 'carrito/carrito.html', {"message": "Tu carrito está vacío."})
 
-    total_amount = sum([item.quantity * item.book.price for item in carrito_items])
+    total_amount = sum(item.quantity * item.book.price for item in carrito_items)
+
+    # Configuración de Mercado Pago
+    sdk = mercadopago.SDK(settings.MERCADOPAGO_ACCESS_TOKEN)
+    items = []
+    for item in carrito_items:
+        items.append({
+            "title": item.book.title,
+            "quantity": item.quantity,
+            "unit_price": float(item.book.price),
+        })
+
+    # Datos de la preferencia
+    preference_data = {
+        "items": items,
+        "back_urls": {
+            "success": request.build_absolute_uri('/payment/success/'),
+            "failure": request.build_absolute_uri('/payment/failure/'),
+            "pending": request.build_absolute_uri('/payment/pending/'),
+        },
+        "auto_return": "approved",
+    }
+
+    # Crear la preferencia y la orden
+    preference_response = sdk.preference().create(preference_data)
+    preference_id = preference_response["response"]["id"]
+
+    order_obj = order.objects.create(
+        customer_id=customer_id if request.user.is_authenticated else None,
+        order_date=now(),
+        status="Pendiente",
+        total_amount=total_amount,
+        total_paid=0,
+    )
+
+    order_obj.payment_url = f"https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id={preference_id}"
+    order_obj.save()
 
     data = {
         'carrito_items': carrito_items,
         'total_amount': total_amount,
+        'payment_url': order_obj.payment_url,
     }
-    return render(request, 'carrito/carrito.html', {
-        'carrito_items': carrito_items,
-        'total_amount': total_amount,
-    })
+
+    return render(request, 'carrito/carrito.html', data)
 
     
 def remove_from_cart(request, book_id):
@@ -214,59 +248,6 @@ def add_to_cart(request, book_id):
         print(f"Quantity updated: {cart_item.quantity}")
     
     return redirect('carrito')
-
-
-@login_required
-def pago(request):
-    customer_id = request.user.id
-    carrito = cartitem.objects.filter(customer_id=customer_id)
-    
-    if not carrito:
-        return render(request, 'carrito/pago.html', {"message": "Tu carrito está vacío."})
-
-    total_amount = sum(item.quantity * item.book.price for item in carrito)
-    
-    sdk = mercadopago.SDK(settings.MERCADOPAGO_ACCESS_TOKEN)
-    items = []
-    for item in carrito:
-        items.append({
-            "title": item.book.title,
-            "quantity": item.quantity,
-            "unit_price": float(item.book.price),
-        })
-
-    preference_data = {
-        "items": items,
-        "back_urls": {
-            "success": request.build_absolute_uri('/payment/success/'),
-            "failure": request.build_absolute_uri('/payment/failure/'),
-            "pending": request.build_absolute_uri('/payment/pending/'),
-        },
-        "auto_return": "approved",
-    }
-
-    preference_response = sdk.preference().create(preference_data)
-    preference_id = preference_response["response"]["id"]
-
-    order_obj = order.objects.create(
-        customer_id=customer_id,
-        order_date=now(),
-        status="Pendiente",
-        total_amount=total_amount,
-        total_paid=0,
-    )
-
-    order_obj.payment_url = f"https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id={preference_id}"
-    order_obj.save()
-
-    data = {
-        'carrito_items': carrito,
-        'total_amount': total_amount,
-        'payment_url': order_obj.payment_url,
-    }
-
-    return render(request, 'carrito/pago.html', data)
-
 
 def PagoSuccess(request):
     return render(request, 'carrito/pago_success.html', {"message": "¡Pago exitoso!"})

@@ -73,9 +73,10 @@ class customer(models.Model):
     class Meta:
         db_table = 'customer'
 
+
 class order(models.Model):
     order_id = models.AutoField(primary_key=True)
-    customer = models.ForeignKey(customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(customer, on_delete=models.CASCADE ,null=True, blank=True)
     order_date = models.DateTimeField()
     status = models.CharField(max_length=50)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
