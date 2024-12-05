@@ -22,6 +22,7 @@ urlpatterns = [
     path('accounts/login/', login_views, {'template_name': 'login/login.html'}, name='login'),
     path('signup/', signup, name='signup'),
     path('logout/', salir, name='salir'),
+    path('delete_book/<int:book_id>/', delete_author_genre_book, name='delete_book'),
     path('payment/success/', PagoSuccess, name='pago_success'),
     path('payment/failure/', PagoFailure, name='pago_failure'),
     path('payment/pending/', PagoPending, name='pago_pending'),

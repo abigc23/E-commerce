@@ -210,6 +210,30 @@ def modificar_book_author_genre(request, book_id):
         return redirect('error_page')
 
 
+
+def delete_author_genre_book(request, book_id):
+    libro = get_object_or_404(book, book_id=book_id)  
+
+    if request.user.is_superuser:  
+        if request.method == 'POST': 
+            author = libro.author
+            genre = libro.genre
+            
+            libro.delete()  
+            
+            if not book.objects.filter(author=author).exists():
+                author.delete()
+            
+            if not book.objects.filter(genre=genre).exists():
+                genre.delete()
+
+            return redirect('home')  
+        
+        return render(request, 'pages/delete.html', {'book': libro})
+
+    else:
+        return redirect('error_page')  
+
 def carrito(request):
     carrito_items = []
     customer_id = None
