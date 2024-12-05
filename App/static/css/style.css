@@ -706,6 +706,7 @@ form input:focus, form textarea:focus {
     align-items: center;
     justify-content: center; 
     align-content: center;
+    gap: 2em;
 }
 
 .img-fluid {
