@@ -60,9 +60,6 @@
                       <li class="nav-item">
                           <a class="nav-link" href="{% url 'visualize' %}">Todos los productos</a>
                       </li>
-                      <li class="nav-item">
-                          <a class="nav-link" href="#contact_btn">Contacto</a>
-                      </li>
                       <li>
                           <a href="{% url 'userprofile' %}">
                               <img src="{% static 'img/user.png' %}" alt="Usuario" class="userlogo">
@@ -159,7 +156,7 @@
                   <h3 class="home-book-title">{{ book.title }}</h3>
                 
                   {% if user.is_superuser %}
-                      <a class="nav-link" href="{% url 'modificar_book' book_id=book.book_id %}">Modificar</a>
+                      <a class="btn-mod-admin" href="{% url 'modificar_book' book_id=book.book_id %}">Modificar</a>
                   {% else %}
                       {% if book.book_id %}
                           <form action="{% url 'add_to_cart' book.book_id %}" method="post">
