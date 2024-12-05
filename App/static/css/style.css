@@ -251,6 +251,36 @@ body {
 }
   
 
+/* VISUALIZE */
+.visualize-books-list {
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    margin-top: 10px;
+    gap: 4em;
+}
+
+.visualize-book-item {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 120px;
+}
+
+.visualize-book-cover {
+    width: 150px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.visualize-book-title {
+    font-size: 16px;
+    color: #333;
+    margin: 0;
+    max-width: 95%;
+}
 
 
 /* Contenedor principal */
@@ -654,3 +684,132 @@ form input:focus, form textarea:focus {
 }
 
 
+/* BOOK DETAILS */
+
+
+.book-detail-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
+.book-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center; 
+    align-content: center;
+}
+
+.img-fluid {
+    max-width: 200px; 
+}
+
+.details-book-cover{
+    width: 200px;
+    height: auto;
+}
+
+.title-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+    max-width: 40%;
+}
+
+.btn-carrito{
+    max-width: 300px;
+    background-color: #006adb;
+    border-radius: 40px;
+    padding: 10px 15px 10px 15px;
+    color: #fff;
+    align-self: center;
+    border: none;
+}
+
+.buy-btn{
+    justify-self: flex-end;
+    align-self: center;
+}
+
+.btn-carrito:hover{
+    background-color: #0056b3;
+}
+
+.book-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+}
+
+.book-author {
+    font-size: 1.2rem;
+    color: #666;
+    margin: 0;
+}
+
+.book-info {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 20;
+}
+.descrip-container{
+    width: 60%;
+}
+.details-container{
+    width: 40%;
+}
+.titulo{
+    font-weight: 600;
+    color: #000;
+    font-size: x-large;
+}
+
+.text{
+    color: #000;
+    text-align: left;
+}
+
+.book-title {
+    font-size: 2rem;
+    font-weight: 00;
+    margin: 0;
+}
+
+.book-author {
+    font-size: 1.5rem;
+    color: #666;
+    margin: 0;
+}
+
+.book-description {
+    line-height: 1.6;
+    font-size: 1rem;
+    text-align: left;
+    max-width: 60%;
+    color: #000;
+}
+
+.cont-book{
+    flex: 1;
+    flex-direction: row;
+    justify-content: baseline;
+}
+
+.book-extra-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: #fff;
+    padding: 80px 50px 30px 50px;
+
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1), 
+                -4px 4px 10px rgba(0, 0, 0, 0.1), 
+                0 4px 10px rgba(0, 0, 0, 0.1);
+}

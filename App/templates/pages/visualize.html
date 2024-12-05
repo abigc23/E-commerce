@@ -1,31 +1,19 @@
 {% extends 'index.html' %}
 
 {% load static %}
-    {% block content %}
-    <div class="container">
-        <h1 class="my-4">Lista de Productos</h1>
-        <div class="row">
-            {% for book in books %}
-                <div class="col-md-4 col-sm-6 mb-4">
-                    <div class="card">
-                        <a href="{% url 'book_detail' book.book_id %}">
-                            <img src="{{ book.cover_image.url }}" class="card-img-top" alt="Portada del libro">
-                        </a>                        
-                        <div class="card-body">
-                            <h5 class="card-title">{{ book.title }}</h5>
-                            <p class="card-text">{{ book.description }}</p>
-                            <p class="card-text"><strong>Fecha de publicación:</strong> {{ book.publication_date }}</p>
-                            <p class="card-text"><strong>ISBN:</strong> {{ book.isbn }}</p>
-                            <p class="card-text"><strong>Precio:</strong> ${{ book.price }}</p>
-                            <p class="card-text"><strong>Stock:</strong> {{ book.stock }}</p>
-                            <p class="card-text"><strong>Autor:</strong> {{ book.author.name }}</p>
-                        </div>
-                    </div>
-                </div>
-            {% empty %}
-                <p>No hay productos disponibles.</p>
-            {% endfor %}
-        </div>
-    </div>
-    {% endblock %}
+{% block content %}
+<h1 class="my-4">Lista de Productos</h1>
 
+<div class="visualize-books-list">
+    {% for book in books %}
+        <div class="visualize-book-item">
+            <a href="{% url 'book_detail' book.book_id %}">
+                <img src="{{ book.cover_image.url }}" alt="{{ book.title }}" class="category-book-cover">
+            </a>                    
+            <h3 class="visualize-book-title">{{ book.title }}</h3>
+        </div>
+    {% empty %}
+        <p>No hay productos disponibles.</p>
+    {% endfor %}
+</div>
+{% endblock %}
