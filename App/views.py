@@ -11,6 +11,8 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.db.models import Q
 from django.utils.timezone import now
 from django.db.models import ObjectDoesNotExist
+from django.contrib import messages
+
 
 
 
@@ -132,39 +134,40 @@ def Add_book_author_genre(request):
     }
 
     if request.method == 'POST':
-        book_query = Newbook(data=request.POST, files=request.FILES)
-        if 'book_title' in request.POST:  
+        action = request.POST.get('action')
+
+        if action == 'add_book':
+            book_query = Newbook(request.POST, request.FILES)
             if book_query.is_valid():
                 book_query.save()
-                data['message_book'] = "Libro registrado correctamente"
+                messages.success(request, "Libro registrado correctamente")
             else:
-                data['message_book'] = "Error al registrar el libro"
+                messages.error(request, f"Error al registrar el libro: {book_query.errors}")
+            data['book_form'] = book_query
 
-        # Formulario de autor
-        author_query = NewAuthor(data=request.POST)
-        if 'author_name' in request.POST:
+        elif action == 'add_author':
+            author_query = NewAuthor(request.POST)
             if author_query.is_valid():
                 author_query.save()
-                data['message_author'] = "Autor registrado correctamente"
+                messages.success(request, "Autor registrado correctamente")
             else:
-                data['message_author'] = "Error al registrar el autor"
+                messages.error(request, f"Error al registrar el autor: {author_query.errors}")
+            data['author_form'] = author_query
 
-        # Formulario de género
-        genre_query = NewGenre(data=request.POST)
-        if 'genre_name' in request.POST:  
+        elif action == 'add_genre':
+            genre_query = NewGenre(request.POST)
             if genre_query.is_valid():
                 genre_query.save()
-                data['message_genre'] = "Género registrado correctamente"
+                messages.success(request, "Género registrado correctamente")
             else:
-                data['message_genre'] = "Error al registrar el género"
+                messages.error(request, f"Error al registrar el género: {genre_query.errors}")
+            data['genre_form'] = genre_query
 
-        data['book_form'] = book_query
-        data['author_form'] = author_query
-        data['genre_form'] = genre_query
+        else:
+            messages.error(request, "Acción no reconocida.")
 
     return render(request, 'pages/add.html', data)
 
-# ruben
 @login_required
 def modificar_book_author_genre(request, book_id):
     try:
