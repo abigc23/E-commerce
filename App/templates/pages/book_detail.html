@@ -25,6 +25,7 @@
                 </form>
             {% else %}
                 <a class="btn-carrito" href="{% url 'modificar_book' book_id=book.book_id %}">Modificar</a>
+                <a class="btn-carrito" href="{% url 'delete_book' book_id=book.book_id %}">Eliminar</a>
             {% endif %}
             {% else %}
                 <form action="{% url 'add_to_cart' book.book_id %}" method="post">

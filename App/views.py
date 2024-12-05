@@ -13,14 +13,9 @@ from django.utils.timezone import now
 from django.db.models import ObjectDoesNotExist
 from django.contrib import messages
 
-
-
-
-
 # Create your views here.
 # ruben
 def Home(request):
-    genres = genre.objects.all() 
     buscar = book.objects.all()
     # order_by('-publication_date')[:6]  
 
@@ -213,7 +208,6 @@ def modificar_book_author_genre(request, book_id):
 
 def delete_author_genre_book(request, book_id):
     libro = get_object_or_404(book, book_id=book_id)  
-
     if request.user.is_superuser:  
         if request.method == 'POST': 
             author = libro.author
