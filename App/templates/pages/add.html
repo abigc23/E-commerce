@@ -2,14 +2,14 @@
 {% load static %}
 
 {% block content %}
-<div class="container mt-5">
+<div class="container-add">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header text-center">
+            <div class="form-card">
+                <div class="form-header">
                     <h2>Agregar Registro</h2>
                 </div>
-                <div class="card-body">
+                <div class="form-body">
                     {% if messages %}
                         {% for message in messages %}
                             <div class="alert alert-{{ message.tags }}">{{ message }}</div>
@@ -18,48 +18,48 @@
 
                     <!-- Formulario para agregar libro -->
                     <div class="mb-4">
-                        <button class="btn btn-primary w-100 text-start" type="button" data-bs-toggle="collapse" data-bs-target="#book-form" aria-expanded="false" aria-controls="book-form">
+                        <button class="form-toggle-btn" type="button" data-bs-toggle="collapse" data-bs-target="#book-form" aria-expanded="false" aria-controls="book-form">
                             Agregar Libro
                         </button>
                         <div class="collapse mt-3" id="book-form">
-                            <form method="POST" enctype="multipart/form-data">
+                            <form class="form-section" method="POST" enctype="multipart/form-data">
                                 {% csrf_token %}
-                                <h3>Agregar Libro</h3>
+                                <h3 class="form-subheading">Agregar Libro</h3>
                                 {{ book_form.as_p }}
                                 <input type="hidden" name="action" value="add_book">
-                                <button class="btn btn-success w-100 mt-3" type="submit">Guardar Libro</button>
+                                <button class="submit-button" type="submit">Guardar Libro</button>
                             </form>
                         </div>
                     </div>
 
                     <!-- Formulario para agregar autor -->
                     <div class="mb-4">
-                        <button class="btn btn-primary w-100 text-start" type="button" data-bs-toggle="collapse" data-bs-target="#author-form" aria-expanded="false" aria-controls="author-form">
+                        <button class="form-toggle-btn" type="button" data-bs-toggle="collapse" data-bs-target="#author-form" aria-expanded="false" aria-controls="author-form">
                             Agregar Autor
                         </button>
                         <div class="collapse mt-3" id="author-form">
-                            <form method="POST">
+                            <form class="form-section" method="POST">
                                 {% csrf_token %}
-                                <h3>Agregar Autor</h3>
+                                <h3 class="form-subheading">Agregar Autor</h3>
                                 {{ author_form.as_p }}
                                 <input type="hidden" name="action" value="add_author">
-                                <button class="btn btn-success w-100 mt-3" type="submit">Guardar Autor</button>
+                                <button class="submit-button" type="submit">Guardar Autor</button>
                             </form>
                         </div>
                     </div>
 
                     <!-- Formulario para agregar género -->
                     <div class="mb-4">
-                        <button class="btn btn-primary w-100 text-start" type="button" data-bs-toggle="collapse" data-bs-target="#genre-form" aria-expanded="false" aria-controls="genre-form">
+                        <button class="form-toggle-btn" type="button" data-bs-toggle="collapse" data-bs-target="#genre-form" aria-expanded="false" aria-controls="genre-form">
                             Agregar Género
                         </button>
                         <div class="collapse mt-3" id="genre-form">
-                            <form method="POST">
+                            <form class="form-section" method="POST">
                                 {% csrf_token %}
-                                <h3>Agregar Género</h3>
+                                <h3 class="form-subheading">Agregar Género</h3>
                                 {{ genre_form.as_p }}
                                 <input type="hidden" name="action" value="add_genre">
-                                <button class="btn btn-success w-100 mt-3" type="submit">Guardar Género</button>
+                                <button class="submit-button" type="submit">Guardar Género</button>
                             </form>
                         </div>
                     </div>
